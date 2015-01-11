@@ -317,7 +317,11 @@
 
            <!-- web start -->
            <!-- json 相关jar包 -->
-
+		   <dependency>
+			   <groupId>com.metaparadigm</groupId>
+			   <artifactId>json-rpc</artifactId>
+			   <version>1.0</version>
+		   </dependency>
            <dependency>
                <groupId>com.alibaba</groupId>
                <artifactId>fastjson</artifactId>

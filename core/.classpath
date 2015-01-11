@@ -99,6 +99,7 @@
   <classpathentry kind="var" path="M2_REPO/com/alibaba/druid/1.0.12/druid-1.0.12.jar" sourcepath="M2_REPO/com/alibaba/druid/1.0.12/druid-1.0.12-sources.jar"/>
   <classpathentry kind="lib" path="D:/Java/jdk1.7.0_07/lib/jconsole.jar"/>
   <classpathentry kind="lib" path="D:/Java/jdk1.7.0_07/lib/tools.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/metaparadigm/json-rpc/1.0/json-rpc-1.0.jar" sourcepath="M2_REPO/com/metaparadigm/json-rpc/1.0/json-rpc-1.0-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/alibaba/fastjson/1.2.3/fastjson-1.2.3.jar" sourcepath="M2_REPO/com/alibaba/fastjson/1.2.3/fastjson-1.2.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.27/mysql-connector-java-5.1.27.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/mockito/mockito-core/1.9.5/mockito-core-1.9.5.jar" sourcepath="M2_REPO/org/mockito/mockito-core/1.9.5/mockito-core-1.9.5-sources.jar"/>

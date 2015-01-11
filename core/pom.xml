@@ -185,6 +185,11 @@
 		<!-- Data source end  -->
 		
 		<!-- json 相关jar包 -->
+		<dependency>
+		   <groupId>com.metaparadigm</groupId>
+		   <artifactId>json-rpc</artifactId>
+		   <optional>true</optional>
+		</dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
