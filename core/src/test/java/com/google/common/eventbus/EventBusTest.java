@@ -1,13 +1,17 @@
-package com.lefeng.test;
+package com.google.common.eventbus;
 
+
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
+public class EventBusTest {
 
-public class EventBusTest{
-
+	@Before
+	public void setUp() throws Exception {
+	}
+	
 	private Logger LOG = LoggerFactory.getLogger(EventBusTest.class);
 	EventBus eventBus = new EventBus();
 	
@@ -19,7 +23,8 @@ public class EventBusTest{
 		eventBus.post(msg);
 	}
 	
-	public static void main(String[] args) {
+	@Test
+	public void testEventBus() {
 		EventBusTest t = new EventBusTest();
 		t.register();
 		t.post("test 123");
@@ -35,6 +40,5 @@ public class EventBusTest{
 	public void unregister(){
 		eventBus.unregister(this);
 	}
-	
-	
+
 }
