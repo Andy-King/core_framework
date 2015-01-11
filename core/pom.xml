@@ -175,6 +175,22 @@
             <optional>true</optional>
         </dependency>
         <!-- ws end -->
+		
+		<!-- Data source start  -->
+		<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <optional>true</optional>
+        </dependency>
+		<!-- Data source end  -->
+		
+		<!-- json 相关jar包 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <optional>true</optional>
+        </dependency>
+		<!-- json -->
     </dependencies>
     <build>
         <plugins>
