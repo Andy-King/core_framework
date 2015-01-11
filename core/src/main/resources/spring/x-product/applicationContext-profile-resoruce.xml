@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+    default-autowire="byName" default-lazy-init="true">
+
+	<description>导入生产环境 配置如下:
+	<!-- 
+	/core-framework-core/src/main/resources/spring/x-product/applicationContext-constants.xml
+	/core-framework-core/src/main/resources/spring/x-product/applicationContext-dao.xml
+	/core-framework-core/src/main/resources/spring/x-product/applicationContext-dataSource.xml
+	/core-framework-core/src/main/resources/spring/x-product/applicationContext-monitorAlert.xml
+	/core-framework-core/src/main/resources/spring/x-product/applicationContext-services.xml
+	/core-framework-core/src/main/resources/spring/x-product/applicationContext-threadPool.xml
+	 -->
+
+	</description>
+
+    <import resource="applicationContext-constants.xml"/>
+    <import resource="applicationContext-dao.xml"/>
+    <import resource="applicationContext-dataSource.xml"/>
+    <import resource="applicationContext-monitorAlert.xml"/>
+    <import resource="applicationContext-services.xml"/>
+    <import resource="applicationContext-threadPool.xml"/>
+</beans>

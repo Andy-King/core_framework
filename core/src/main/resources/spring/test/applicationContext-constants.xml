@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+    default-autowire="byName" default-lazy-init="true">
+
+	<description>constant 配置如下:</description>
+
+	<!-- 数据常量参数 -->
+    <bean id="environment" class="com.lafaso.constant.Environment" lazy-init="false">
+     	<!-- 通过key-value的形式来关联 -->
+		<property name="env">
+			<map key-type="java.lang.String">
+				<!-- Cookie expire time -->
+				<!-- demo 
+				<entry key="cookie_expire_time_integer" 		value="80000" />
+				<entry key="cookie_expire_time_boolean" 		value="true" />
+				<entry key="cookie_expire_time_float"	 		value="80000.08F" />
+				<entry key="cookie_expire_time_double" 			value="800.001" />
+				<entry key="cookie_expire_time_character" 		value="8" />
+				 -->
+				
+				<!-- batch.status 0制卡中1初始2已采购3已入库-->
+				<entry key="db_batch_status_make_card"			value="0"/>
+				<entry key="db_batch_status_init" 				value="1"/>
+				<entry key="db_batch_status_purchased" 	    	value="2"/>
+				<entry key="db_batch_status_storaged"			value="3"/>
+			</map>
+		</property>
+	</bean> 
+	
+</beans>

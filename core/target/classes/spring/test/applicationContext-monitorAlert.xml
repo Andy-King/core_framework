@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+    default-autowire="byName" default-lazy-init="true">
+
+	<description>ThreadPool 配置如下:
+	<!--
+	e.g: 
+	<bean id="alertItem7" class="com.lafaso.monitor.AlertItem">
+       <property name="name" value="彭涛"/>
+       <property name="url">
+           <list>
+               <value>http://passport.lefeng.com/inc/valide_user.jsp</value>
+               <value>http://passport.lefeng.com/inc/valide_user_json.jsp</value>
+           </list>
+       </property>
+       <property name="phone" value="13391770716"/>
+       <property name="interval" value="60000"/>
+       <property name="cookie" value="LongTimeValuesCookies=__SSO_LOGIN%248accb139e8188e958ef0af73450e6b555aceb08350758192dbb9f8d02ceca5f8%23__user_id_login_2009%2490cdab777ff74098%23__LOGIN__VIEWINFO__%24ttaa%23__LOGIN%24rinapt%23__user_id__%246323267;"></property>
+    </bean>
+	
+    <bean id="serviceMonitorAlert" class="com.lafaso.monitor.ServiceMonitorAlert">
+       <property name="executorService" ref="executorService"></property>
+       <property name="monitorItems">
+           <list>
+               <ref bean="lottery"/>
+               <ref bean="promos"/>
+               <ref bean="product"/>
+               <ref bean="union"/>
+               <ref bean="cardAndList"/>
+               <ref bean="sList"/>
+               <ref bean="passport"/>
+               <ref bean="point"/>
+           </list>
+       </property>
+    </bean>
+	 -->
+
+	</description>
+	
+	<bean id="lottery" class="com.lafaso.monitor.AlertItem">
+	   <property name="name" value="何磊"/>
+	   <property name="url">
+	       <list>
+	           <value>http://lottery.lefeng.com/lottery/lottery_platform_lucky_draw.jsp?activeId=38021</value>
+	           <value>http://lottery.lefeng.com/lottery/lottery_platform_lucky_draw_winners.jsp?activeId=38021</value>
+	       </list>
+	   </property>
+	   <property name="phone" value="13718062982"/>
+	   <property name="interval" value="60000"/>
+	</bean>
+	
+	<bean id="promos" class="com.lafaso.monitor.AlertItem">
+	   <property name="name" value="顾铭"/>
+	   <property name="url">
+	       <list>
+	           <value>http://promos.lefeng.com/recommend/pkg/8260</value>
+	           <value>http://promos.lefeng.com/promotions/8260</value>
+	           <value>http://promos.lefeng.com/promotion/8260</value>
+	       </list>
+	   </property>
+	   <property name="phone" value="13699191004"/>
+	   <property name="interval" value="60000"/>
+	</bean>
+	
+	<bean id="product" class="com.lafaso.monitor.AlertItem">
+	   <property name="name" value="张涵林"/>
+	   <property name="url">
+	       <list>
+	           <value>http://product.lefeng.com/goods/productDetail.jsp?productId=8260</value>
+	           <value>http://brand.lefeng.com/brand/brandDetail.jsp?brandId=2059</value>
+	           <value>http://s.lefeng.com/brand/detail.jsp?brandId=1663</value>
+	           <value>http://product.lefeng.com/goods/pklist.jsp?productId=137880</value>
+	       </list>
+	   </property>
+	   <property name="phone" value="18611481496"/>
+	   <property name="interval" value="60000"/>
+	</bean>
+	
+	<bean id="union" class="com.lafaso.monitor.AlertItem">
+	   <property name="name" value="陈义"/>
+	   <property name="url">
+	       <list>
+	           <value>http://union.lefeng.com/message/noticedetail.action?nid=22181</value>
+	       </list>
+	   </property>
+	   <property name="phone" value="13581779081"/>
+	   <property name="interval" value="60000"/>
+	</bean>
+	
+	<bean id="cardAndList" class="com.lafaso.monitor.AlertItem">
+	   <property name="name" value="朱凤娇"/>
+	   <property name="url">
+	       <list>
+	           <value>http://s.lefeng.com/directory/26008.html</value>
+               <value>http://192.168.50.68/hessianEcho.jsp</value>
+               <value>http://192.168.50.68/echo.jsp</value>
+	       </list>
+	   </property>
+	   <property name="phone" value="18531325749"/>
+	   <property name="interval" value="60000"/>
+	</bean>
+	
+	<bean id="sList" class="com.lafaso.monitor.AlertItem">
+	   <property name="name" value="王昶"/>
+	   <property name="url">
+	       <list>
+	           <value>http://s.lefeng.com/search/discountinfolist.jsp?labelKey=pinpai_test</value>
+               <value>http://s.lefeng.com/search/wardrobe_list.jsp?labelKey=cryc_test</value>
+               <value>http://192.168.1.11/cron/flush_userfavor.jsp?action=1</value>
+	       </list>
+	   </property>
+	   <property name="phone" value="15588004282"/>
+	   <property name="interval" value="60000"/>
+	</bean>
+	
+	<bean id="passport" class="com.lafaso.monitor.AlertItem">
+	   <property name="name" value="彭涛"/>
+	   <property name="url">
+	       <list>
+	           <value>http://passport.lefeng.com/inc/valide_user.jsp</value>
+               <value>http://passport.lefeng.com/inc/valide_user_json.jsp</value>
+	       </list>
+	   </property>
+	   <property name="phone" value="13391770716"/>
+	   <property name="interval" value="60000"/>
+	   <property name="cookie" value="LongTimeValuesCookies=__SSO_LOGIN%248accb139e8188e958ef0af73450e6b555aceb08350758192dbb9f8d02ceca5f8%23__user_id_login_2009%2490cdab777ff74098%23__LOGIN__VIEWINFO__%24ttaa%23__LOGIN%24rinapt%23__user_id__%246323267;"></property>
+	</bean>
+	<bean id="point" class="com.lafaso.monitor.AlertItem">
+	   <property name="name" value="王匡维"/>
+	   <property name="url">
+	       <list>
+	           <value>http://192.168.1.6/point/auto_postuserpointvalue.jsp?userid=29290216</value>
+	       </list>
+	   </property>
+	   <property name="phone" value="18601178992"/>
+	   <property name="interval" value="60000"/>
+	</bean>
+	
+	<bean id="serviceMonitorAlert" class="com.lafaso.monitor.ServiceMonitorAlert">
+	   <property name="executorService" ref="executorService"></property>
+	   <property name="monitorItems">
+	       <list>
+	           <ref bean="lottery"/>
+	           <ref bean="promos"/>
+	           <ref bean="product"/>
+	           <ref bean="union"/>
+	           <ref bean="cardAndList"/>
+	           <ref bean="sList"/>
+	           <ref bean="passport"/>
+	           <ref bean="point"/>
+	       </list>
+	   </property>
+	</bean>
+</beans>

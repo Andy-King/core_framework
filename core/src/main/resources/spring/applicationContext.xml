@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	  http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd 
+	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
+	default-autowire="byName"  default-lazy-init="true">
+	
+	<!-- 定义受环境影响易变的变量 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="locations">
+            <list>
+                <!-- /conf/*properties 配置文件 -->
+                <value>classpath*:/conf/*.properties</value> 
+            </list>
+        </property>
+    </bean>
+    
+    <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired、@Resource的属性被注入 -->
+    <context:component-scan base-package="com.lafaso">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    
+	<!-- 注:此bean必须设置 lazy-init="false"-->
+	<bean class="com.lafaso.util.SpringUtils" lazy-init="false"/>
+	
+    <!-- 
+    /core-framework-core/src/main/resources/spring/dev
+	/core-framework-core/src/main/resources/spring/test
+	/core-framework-core/src/main/resources/spring/x-product
+     -->
+    <import resource="dev/applicationContext-profile-resoruce.xml"/>
+</beans>
