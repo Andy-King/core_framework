@@ -92,7 +92,8 @@
 		<log4jdbc.remix.version>0.2.7</log4jdbc.remix.version>
 		<json.rpc.version>1.0</json.rpc.version>
 		<!--<servlet.version>3.1.0</servlet.version>-->
-		<servlet.api.version>2.5</servlet.api.version>
+		<servlet.version>2.5</servlet.version>
+		<jsp.version>2.0</jsp.version>
 		<servlet.jstl.version>1.2</servlet.jstl.version>
 		<taglibs.version>1.1.2</taglibs.version>
 
@@ -455,9 +456,15 @@
            <dependency>
                <groupId>javax.servlet</groupId>
                <artifactId>servlet-api</artifactId>
-               <version>${servlet.api.version}</version>
+               <version>${servlet.version}</version>
                <scope>provided</scope>
            </dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>${jsp.version}</version>
+				<scope>provided</scope>
+			</dependency>
            <dependency>
                <groupId>javax.servlet</groupId>
                <artifactId>jstl</artifactId>
@@ -606,6 +613,13 @@
 				<artifactId>kaptcha</artifactId>
 				<version>${google.kaptcha.version}</version>
 			</dependency>
+			
+			<!--bootstrap start-->
+			<dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>${bootstrap.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>

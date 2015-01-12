@@ -9,7 +9,6 @@ public class BitMap{
 	private static final byte MAX = 127;  
 
 	public static void main(String[] args) throws InterruptedException {  
-		int m = 1578015112 ;  
 		BitMap hm = new BitMap(12500000) ;  
 		for(int i = 0; i < 12500; i++) {
 			hm.add(i) ;  
