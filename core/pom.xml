@@ -223,6 +223,13 @@
             <optional>true</optional>
         </dependency>
 		<!-- json -->
+		
+		<!-- jedis client -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+		
     </dependencies>
     <build>
         <plugins>
