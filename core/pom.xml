@@ -175,7 +175,34 @@
             <optional>true</optional>
         </dependency>
         <!-- ws end -->
-		
+		<!-- orm start -->
+		<!-- hibernate orm -->
+		<dependency>
+		   <groupId>javax.validation</groupId>
+		   <artifactId>validation-api</artifactId>
+		   <optional>true</optional>
+		</dependency>
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-validator</artifactId>
+		   <optional>true</optional>
+		</dependency>
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-core</artifactId>
+		   <optional>true</optional>
+		</dependency>
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-envers</artifactId>
+		   <optional>true</optional>
+		</dependency>
+		<dependency>
+		   <groupId>org.hibernate</groupId>
+		   <artifactId>hibernate-entitymanager</artifactId>
+		   <optional>true</optional>
+		</dependency>
+		<!-- orm end -->   
 		<!-- Data source start  -->
 		<dependency>
             <groupId>com.alibaba</groupId>

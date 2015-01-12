@@ -170,7 +170,7 @@ public abstract class Files {
      * @param fileName
      * @return
      */
-    public static String getFileExtensions(String fileName){
+    public static String getFileExtension(String fileName){
     	String ext = null;
     	if(StringUtils.hasText(fileName) && fileName.lastIndexOf('.') > 0 ){
     		ext = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length());

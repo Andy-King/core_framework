@@ -14,28 +14,28 @@ import org.apache.commons.lang3.Validate;
  * 封装各种格式的编码解码工具类.
  * 
  * 
- * @author calvin
+ * @author AK
  */
-public class EncodeUtils {
+public class EncoderUtils {
 	
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 
-	private EncodeUtils() {
+	private EncoderUtils() {
 	}
 
 	/**
 	 * Hex编码, byte[]->String.
 	 */
-	public static String encodeHex(byte[] input) {
+	public static String hexEncode(byte[] input) {
 		return Hex.encodeHexString(input);
 	}
 
 	/**
 	 * Hex解码, String->byte[].
 	 */
-	public static byte[] decodeHex(String input) {
+	public static byte[] hexDecode(String input) {
 		try {
 			return Hex.decodeHex(input.toCharArray());
 		} catch (DecoderException e) {
@@ -46,35 +46,35 @@ public class EncodeUtils {
 	/**
 	 * Base64编码, byte[]->String.
 	 */
-	public static String encodeBase64(byte[] input) {
+	public static String base64Encode(byte[] input) {
 		return Base64.encodeBase64String(input);
 	}
 
 	/**
 	 * Base64编码, URL安全(将Base64中的URL非法字符'+'和'/'转为'-'和'_', 见RFC3548).
 	 */
-	public static String encodeUrlSafeBase64(byte[] input) {
+	public static String base64UrlSafeEncode(byte[] input) {
 		return Base64.encodeBase64URLSafeString(input);
 	}
 
 	/**
 	 * Base64解码, String->byte[].
 	 */
-	public static byte[] decodeBase64(String input) {
+	public static byte[] base64Decode(String input) {
 		return Base64.decodeBase64(input);
 	}
 
 	/**
 	 * Base62(0_9A_Za_z)编码数字, long->String.
 	 */
-	public static String encodeBase62(long num) {
+	public static String base62Encode(long num) {
 		return alphabetEncode(num, 62);
 	}
 
 	/**
 	 * Base62(0_9A_Za_z)解码数字, String->long.
 	 */
-	public static long decodeBase62(String str) {
+	public static long base62Decode(String str) {
 		return alphabetDecode(str, 62);
 	}
 
@@ -115,6 +115,7 @@ public class EncodeUtils {
 
 	/**
 	 * Xml 转码.
+	 * @see org.apache.commons.lang3.StringEscapeUtils#escapeXml10
 	 */
 	public static String escapeXml10(String xml) {
 		return StringEscapeUtils.escapeXml10(xml);
@@ -122,6 +123,7 @@ public class EncodeUtils {
 	
 	/**
 	 * Xml 转码.
+	 * @see org.apache.commons.lang3.StringEscapeUtils#escapeXml11
 	 */
 	public static String escapeXml11(String xml) {
 		return StringEscapeUtils.escapeXml11(xml);

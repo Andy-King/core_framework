@@ -39,7 +39,7 @@ import org.springframework.util.Assert;
  * @author maurice
  */
 
-@SuppressWarnings({ "unchecked", "rawtypes" })
+@SuppressWarnings({"unchecked"})
 public abstract class ReflectionUtils {
 
 	public static final String CGLIB_CLASS_SEPARATOR = "$$";

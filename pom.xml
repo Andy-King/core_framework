@@ -37,7 +37,110 @@
             <timezone>+8</timezone>
         </developer>
     </developers>-->
+	
+    <properties>
+        <!-- Application settings -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <copyright.year>2014</copyright.year>
+        <dao.framework>hibernate</dao.framework>
+        <web.framework>spring</web.framework>
+        <amp.genericCore>true</amp.genericCore>
+        <amp.fullSource>false</amp.fullSource>
+        <db.name>core_framework</db.name>
+        
+        <!-- Framework dependency versions -->
+        <spring.version>4.1.4.RELEASE</spring.version>
+        <springmodules.validation.version>0.8</springmodules.validation.version>
+		<slf4j.version>1.7.6</slf4j.version>
+        <h2.version>1.3.174</h2.version>
+        <mysql.connector.version>5.1.27</mysql.connector.version>
+        <hibernate.version>4.3.4.Final</hibernate.version>
+		<hibernate-validator.version>5.0.2.Final</hibernate-validator.version>
+        <cxf.version>2.7.10</cxf.version>
+        <jackson.version>2.3.2</jackson.version>
+        <jetty.version>7.6.11.v20130520</jetty.version>
+        <freemarker.version>2.3.20</freemarker.version>
+        <shiro.version>1.2.3</shiro.version>
+        <ehcache.version>2.6.8</ehcache.version>
+        <logback.version>1.1.1</logback.version>
+        <aspectj.version>1.7.4</aspectj.version>
+        <poi.version>3.10-FINAL</poi.version>
+        <selenium.version>2.38.0</selenium.version>       
+        <bootstrap.version>3.0.2</bootstrap.version>
+        <commons.fileupload.version>1.3</commons.fileupload.version>
+        <commons.io.version>2.4</commons.io.version>
+		<commons.pool.version>1.6</commons.pool.version>
+		<commons.beanutils.version>1.9.1</commons.beanutils.version>
+		<commons.lang3.version>3.3</commons.lang3.version>
+		<commons.codec.version>1.9</commons.codec.version>
+		<commons.collections.version>3.2.1</commons.collections.version>
+        <displaytag.version>1.2</displaytag.version>
+		<fastjson.version>1.2.3</fastjson.version>
+        <asm.version>3.3.1</asm.version>
+		<dom4j.version>1.6.1</dom4j.version>
+		<jaxen.version>1.1.6</jaxen.version>
+		<xercesImpl.version>2.11.0</xercesImpl.version>
+		<dozer.version>5.4.0</dozer.version>
+		<javax.mail.version>1.4.7</javax.mail.version>
+		<javassist.version>3.18.1-GA</javassist.version>
+		<apache.xmlbeans.version>2.6.0</apache.xmlbeans.version>
+		<joda-time.version>2.3</joda-time.version>
+		<cglib-nodep.version>3.0</cglib-nodep.version>
+		<javax.el.api.version>2.2.4</javax.el.api.version>
+		<javax.validation.api.version>1.1.0.Final</javax.validation.api.version>
+		<tomcat.jdbc.version>8.0.3</tomcat.jdbc.version>
+		<log4jdbc.remix.version>0.2.7</log4jdbc.remix.version>
+		<json.rpc.version>1.0</json.rpc.version>
+		<!--<servlet.version>3.1.0</servlet.version>-->
+		<servlet.api.version>2.5</servlet.api.version>
+		<servlet.jstl.version>1.2</servlet.jstl.version>
+		<taglibs.version>1.1.2</taglibs.version>
 
+        <!-- Testing dependency versions -->
+        <cargo.version>1.4.4</cargo.version>
+        <mockito.version>1.9.5</mockito.version>
+        <jsp.version>2.1</jsp.version>
+        <junit.version>4.11</junit.version>
+        
+        <wiser.version>1.2</wiser.version>
+
+        <!-- WebTest default target -->
+        <webtest.target>run-all-tests</webtest.target>
+
+        <cargo.container>tomcat7x</cargo.container>
+        <cargo.container.home>${env.CATALINA_HOME}</cargo.container.home>
+        <cargo.container.url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.47/bin/apache-tomcat-7.0.47.zip</cargo.container.url>
+        <cargo.host>localhost</cargo.host>
+        <cargo.port>8081</cargo.port>
+        <cargo.wait>false</cargo.wait>
+        
+        <!-- Jetty Cargo settings:
+        <cargo.container>jetty6x</cargo.container>
+        <cargo.container.url>http://dist.codehaus.org/jetty/jetty-6.1.21/jetty-6.1.21.zip</cargo.container.url>
+        -->
+        
+        <!-- Database settings -->
+		<druid.version>1.0.12</druid.version>
+		
+		<dbunit.version>2.4.9</dbunit.version>
+        <dbunit.dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dbunit.dataTypeFactoryName>
+        <dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
+        <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
+        <jdbc.groupId>mysql</jdbc.groupId>
+        <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
+        <jdbc.version>5.1.27</jdbc.version>
+        <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
+        <jdbc.url>jdbc:mysql://localhost/${db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</jdbc.url>
+        <jdbc.username>root</jdbc.username>
+        <jdbc.password/>
+        <jdbc.validationQuery>SELECT 1 + 1</jdbc.validationQuery>
+		
+		<!-- Google settings -->
+		<google.collections.version>snapshot-20080530</google.collections.version>
+		<google.kaptcha.version>2.3.2</google.kaptcha.version>
+		<google.guava.version>18.0</google.guava.version>
+    </properties>
+	
     <dependencyManagement>
         <dependencies>
 			<!-- srping start -->
@@ -61,13 +164,13 @@
            <dependency>
                <groupId>cglib</groupId>
                <artifactId>cglib-nodep</artifactId>
-               <version>3.0</version>
+               <version>${cglib-nodep.version}</version>
            </dependency>
            <!-- srping end -->
            <dependency>
                <groupId>javax.el</groupId>
                <artifactId>javax.el-api</artifactId>
-               <version>2.2.4</version>
+               <version>${javax.el.api.version}</version>
                <scope>provided</scope>
            </dependency>
            <!-- orm start -->
@@ -75,12 +178,12 @@
            <dependency>
                <groupId>javax.validation</groupId>
                <artifactId>validation-api</artifactId>
-               <version>1.1.0.Final</version>
+               <version>${javax.validation.api.version}</version>
            </dependency>
            <dependency>
                <groupId>org.hibernate</groupId>
                <artifactId>hibernate-validator</artifactId>
-               <version>5.0.2.Final</version>
+               <version>${hibernate-validator.version}</version>
            </dependency>
            <dependency>
                <groupId>org.hibernate</groupId>
@@ -148,7 +251,7 @@
            <dependency>
                <groupId>org.lazyluke</groupId>
                <artifactId>log4jdbc-remix</artifactId>
-               <version>0.2.7</version>
+               <version>${log4jdbc.remix.version}</version>
                <scope>runtime</scope>
            </dependency>
            <!-- log end -->
@@ -158,73 +261,68 @@
            <dependency>
                <groupId>org.apache.tomcat</groupId>
                <artifactId>tomcat-jdbc</artifactId>
-               <version>8.0.3</version>
+               <version>${tomcat.jdbc.version}</version>
                <scope>runtime</scope>
-           </dependency>
-           <dependency>
-               <groupId>commons-dbutils</groupId>
-               <artifactId>commons-dbutils</artifactId>
-               <version>1.5</version>
            </dependency>
            <dependency>
                <groupId>commons-pool</groupId>
                <artifactId>commons-pool</artifactId>
-               <version>1.6</version>
+               <version>${commons.pool.version}</version>
            </dependency>
            <dependency>
                <groupId>commons-beanutils</groupId>
                <artifactId>commons-beanutils</artifactId>
-               <version>1.9.1</version>
+               <version>${commons.beanutils.version}</version>
            </dependency>
            <dependency>
                <groupId>org.apache.commons</groupId>
                <artifactId>commons-lang3</artifactId>
-               <version>3.3</version>
+               <version>${commons.lang3.version}</version>
            </dependency>
            <dependency>
                <groupId>commons-codec</groupId>
                <artifactId>commons-codec</artifactId>
-               <version>1.9</version>
+               <version>${commons.codec.version}</version>
            </dependency>
            <dependency>
                <groupId>commons-collections</groupId>
                <artifactId>commons-collections</artifactId>
-               <version>3.2.1</version>
+               <version>${commons.collections.version}</version>
            </dependency>
            <dependency>
                <groupId>commons-io</groupId>
                <artifactId>commons-io</artifactId>
-               <version>2.4</version>
+               <version>${commons.io.version}</version>
            </dependency>
            <dependency>
                <groupId>commons-fileupload</groupId>
                <artifactId>commons-fileupload</artifactId>
-               <version>1.3.1</version>
+               <version>${commons.fileupload.version}</version>
            </dependency>
            <dependency>
                <groupId>asm</groupId>
                <artifactId>asm</artifactId>
-               <version>3.3.1</version>
+               <version>${asm.version}</version>
            </dependency>
            <dependency>
                <groupId>dom4j</groupId>
                <artifactId>dom4j</artifactId>
-               <version>1.6.1</version>
+               <version>${dom4j.version}</version>
            </dependency>
            <dependency>
                <groupId>jaxen</groupId>
                <artifactId>jaxen</artifactId>
-               <version>1.1.6</version>
+               <version>${jaxen.version}</version>
            </dependency>
            <dependency>
                <groupId>xerces</groupId>
                <artifactId>xercesImpl</artifactId>
-               <version>2.11.0</version>
+               <version>${xercesImpl.version}</version>
            </dependency>
            <dependency>
                <groupId>net.sf.dozer</groupId>
                <artifactId>dozer</artifactId>
-               <version>5.4.0</version>
+               <version>${dozer.version}</version>
                <exclusions>
                    <exclusion>
                        <groupId>org.slf4j</groupId>
@@ -235,12 +333,12 @@
            <dependency>
                <groupId>javax.mail</groupId>
                <artifactId>mail</artifactId>
-               <version>1.4.7</version>
+               <version>${javax.mail.version}</version>
            </dependency>
            <dependency>
                <groupId>org.javassist</groupId>
                <artifactId>javassist</artifactId>
-               <version>3.18.1-GA</version>
+               <version>${javassist.version}</version>
            </dependency>
            <dependency>
                <groupId>org.apache.poi</groupId>
@@ -265,17 +363,17 @@
            <dependency>
                <groupId>org.apache.xmlbeans</groupId>
                <artifactId>xmlbeans</artifactId>
-               <version>2.6.0</version>
+               <version>${apache.xmlbeans.version}</version>
            </dependency>
            <dependency>
                <groupId>joda-time</groupId>
                <artifactId>joda-time</artifactId>
-               <version>2.3</version>
+               <version>${joda-time.version}</version>
            </dependency>
            <dependency>
                <groupId>com.google.guava</groupId>
                <artifactId>guava</artifactId>
-               <version>18.0</version>
+               <version>${google.guava.version}</version>
            </dependency>
            <!-- commons end -->
 		   <!-- Data source start-->
@@ -320,7 +418,7 @@
 		   <dependency>
 			   <groupId>com.metaparadigm</groupId>
 			   <artifactId>json-rpc</artifactId>
-			   <version>1.0</version>
+			   <version>${json.rpc.version}</version>
 		   </dependency>
            <dependency>
                <groupId>com.alibaba</groupId>
@@ -357,18 +455,18 @@
            <dependency>
                <groupId>javax.servlet</groupId>
                <artifactId>servlet-api</artifactId>
-               <version>2.5</version>
+               <version>${servlet.api.version}</version>
                <scope>provided</scope>
            </dependency>
            <dependency>
                <groupId>javax.servlet</groupId>
                <artifactId>jstl</artifactId>
-               <version>1.2</version>
+               <version>${servlet.jstl.version}</version>
            </dependency>
            <dependency>
                <groupId>taglibs</groupId>
                <artifactId>standard</artifactId>
-               <version>1.1.2</version>
+               <version>${taglibs.version}</version>
            </dependency>
            
            <!-- apache shiro security web -->
@@ -424,14 +522,14 @@
            <dependency>
                <groupId>junit</groupId>
                <artifactId>junit</artifactId>
-               <version>4.11</version>
+               <version>${junit.version}</version>
            </dependency>
            
 
            <dependency>
                <groupId>org.dbunit</groupId>
                <artifactId>dbunit</artifactId>
-               <version>2.4.9</version>
+               <version>${dbunit.version}</version>
            </dependency>
            
            <dependency>
@@ -495,6 +593,19 @@
                <version>${jetty.version}</version>
            </dependency>
            <!-- test end -->
+		   
+		   <!-- 5) Google Project -->
+			<dependency>
+				<groupId>com.google.code.google-collections</groupId>
+				<artifactId>google-collect</artifactId>
+				<version>${google.collections.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.code</groupId>
+				<artifactId>kaptcha</artifactId>
+				<version>${google.kaptcha.version}</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
     <dependencies>
@@ -577,82 +688,8 @@
             </plugin>
         </plugins>
     </reporting>
-
-
-    <properties>
-        <!-- Application settings -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <copyright.year>2014</copyright.year>
-        <dao.framework>hibernate</dao.framework>
-        <web.framework>spring</web.framework>
-        <amp.genericCore>true</amp.genericCore>
-        <amp.fullSource>false</amp.fullSource>
-        <db.name>core_framework</db.name>
-        
-        <!-- Framework dependency versions -->
-        <spring.version>4.1.4.RELEASE</spring.version>
-        <springmodules.validation.version>0.8</springmodules.validation.version>
-		<common-collections4.version>4.0</common-collections4.version>
-        <slf4j.version>1.7.6</slf4j.version>
-        <h2.version>1.3.174</h2.version>
-        <mysql.connector.version>5.1.27</mysql.connector.version>
-        <hibernate.version>4.3.4.Final</hibernate.version>
-        <cxf.version>2.7.10</cxf.version>
-        <jackson.version>2.3.2</jackson.version>
-        <jetty.version>7.6.11.v20130520</jetty.version>
-        <freemarker.version>2.3.20</freemarker.version>
-        <shiro.version>1.2.3</shiro.version>
-        <ehcache.version>2.6.8</ehcache.version>
-        <logback.version>1.1.1</logback.version>
-        <aspectj.version>1.7.4</aspectj.version>
-        <poi.version>3.10-FINAL</poi.version>
-        <selenium.version>2.38.0</selenium.version>       
-        <bootstrap.version>3.0.2</bootstrap.version>
-        <commons.fileupload.version>1.3</commons.fileupload.version>
-        <commons.io.version>2.4</commons.io.version>
-        <displaytag.version>1.2</displaytag.version>
-		<fastjson.version>1.2.3</fastjson.version>
-        
-
-        <!-- Testing dependency versions -->
-        <cargo.version>1.4.4</cargo.version>
-        <mockito.version>1.9.5</mockito.version>
-        <jsp.version>2.1</jsp.version>
-        <junit.version>4.11</junit.version>
-        <servlet.version>3.1.0</servlet.version>
-        <wiser.version>1.2</wiser.version>
-
-        <!-- WebTest default target -->
-        <webtest.target>run-all-tests</webtest.target>
-
-        <cargo.container>tomcat7x</cargo.container>
-        <cargo.container.home>${env.CATALINA_HOME}</cargo.container.home>
-        <cargo.container.url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.47/bin/apache-tomcat-7.0.47.zip</cargo.container.url>
-        <cargo.host>localhost</cargo.host>
-        <cargo.port>8081</cargo.port>
-        <cargo.wait>false</cargo.wait>
-        
-        <!-- Jetty Cargo settings:
-        <cargo.container>jetty6x</cargo.container>
-        <cargo.container.url>http://dist.codehaus.org/jetty/jetty-6.1.21/jetty-6.1.21.zip</cargo.container.url>
-        -->
-        
-        <!-- Database settings -->
-		<druid.version>1.0.12</druid.version>
-        <dbunit.dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dbunit.dataTypeFactoryName>
-        <dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
-        <hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
-        <jdbc.groupId>mysql</jdbc.groupId>
-        <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-        <jdbc.version>5.1.27</jdbc.version>
-        <jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-        <jdbc.url>jdbc:mysql://localhost/${db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</jdbc.url>
-        <jdbc.username>root</jdbc.username>
-        <jdbc.password/>
-        <jdbc.validationQuery>SELECT 1 + 1</jdbc.validationQuery>
-    </properties>
     
-        <!-- 插件配置 -->
+    <!-- 插件配置 -->
     <build>
         <pluginManagement>
             <plugins>
