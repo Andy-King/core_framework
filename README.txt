@@ -1,4 +1,4 @@
-AppFuse Modular Spring MVC Archetype
+JEE CRUD Framework Archetype
 --------------------------------------------------------------------------------
 If you're reading this then you've created your new project using Maven and
 appfuse-basic-spring.  You have only created the shell of an AppFuse Java EE
@@ -24,7 +24,5 @@ To get started, complete the following steps:
 
 4. View the application at http://localhost:8080.
 
-5. More information can be found at:
 
-    http://appfuse.org/display/APF/AppFuse+QuickStart
 
