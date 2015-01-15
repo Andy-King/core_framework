@@ -1,33 +1,44 @@
 package org.jee.framework.core.utils;
 
 import java.security.GeneralSecurityException;
-import java.security.SecureRandom;
 import java.util.Arrays;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
+ * <pre>
  * 支持HMAC-SHA1消息签名 及 DES/AES对称加密的工具类.
  * 
  * 支持Hex与Base64两种编码方式.
+ * 注:AES的key的长度需要是8的倍数，你在生成key的时候，生成的长度为64就可以了。
  * 
- * @author calvin
+ * 调用说明:
+ * System.out.println(aesDecrypt(aesEncrypt("abc".getBytes(), "dffxdfhydffxdfhy".getBytes()), "dffxdfhydffxdfhy".getBytes()));
+ * byte[] key = "dffxdfhydffxdfhy".getBytes();
+ * String encode = EncoderUtils.hexEncode(aesEncrypt("abc".getBytes(), key));
+ * System.out.println(encode);
+ * String decode = aesDecrypt(EncoderUtils.hexDecode(encode), key);
+ * System.out.println(decode);
+ * 
+ * 输出结果:
+ * f535ebb2f15c8877102b7cfde6adf259
+ * abc
+ * 
+ * </pre>
+ * @author AK
  */
 public abstract class CryptoUtils {
 	
-	private static final String AES = "AES";
-	private static final String AES_CBC = "AES/CBC/PKCS5Padding";
+	public static final String AES = "AES";
+	public static final String DES = "DES"; //定义 加密算法,可用 DES,DESede,Blowfish
+	
 	private static final String HMACSHA1 = "HmacSHA1";
 
 	private static final int DEFAULT_HMACSHA1_KEYSIZE = 160; // RFC2401
-	private static final int DEFAULT_AES_KEYSIZE = 128;
-	private static final int DEFAULT_IVSIZE = 16;
-
-	private static SecureRandom random = new SecureRandom();
 
 	// -- HMAC-SHA1 funciton --//
 	/**
@@ -75,6 +86,7 @@ public abstract class CryptoUtils {
 	}
 
 	// -- AES funciton --//
+
 	/**
 	 * 使用AES加密原始字符串.
 	 * 
@@ -82,20 +94,19 @@ public abstract class CryptoUtils {
 	 * @param key 符合AES要求的密钥
 	 */
 	public static byte[] aesEncrypt(byte[] input, byte[] key) {
-		return aes(input, key, Cipher.ENCRYPT_MODE);
+		return encrypt(input, key, AES);
 	}
-
+	
 	/**
 	 * 使用AES加密原始字符串.
 	 * 
 	 * @param input 原始输入字符数组
 	 * @param key 符合AES要求的密钥
-	 * @param iv 初始向量
 	 */
-	public static byte[] aesEncrypt(byte[] input, byte[] key, byte[] iv) {
-		return aes(input, key, iv, Cipher.ENCRYPT_MODE);
+	public static String aesEncrypt(String input, byte[] key) {
+		return EncoderUtils.hexEncode(aesEncrypt(input.getBytes(), key));
 	}
-
+	
 	/**
 	 * 使用AES解密字符串, 返回原始字符串.
 	 * 
@@ -103,22 +114,95 @@ public abstract class CryptoUtils {
 	 * @param key 符合AES要求的密钥
 	 */
 	public static String aesDecrypt(byte[] input, byte[] key) {
-		byte[] decryptResult = aes(input, key, Cipher.DECRYPT_MODE);
-		return new String(decryptResult);
+		return decrypt(input, key, AES);
 	}
-
+	
 	/**
 	 * 使用AES解密字符串, 返回原始字符串.
 	 * 
 	 * @param input Hex编码的加密字符串
 	 * @param key 符合AES要求的密钥
-	 * @param iv 初始向量
 	 */
-	public static String aesDecrypt(byte[] input, byte[] key, byte[] iv) {
-		byte[] decryptResult = aes(input, key, iv, Cipher.DECRYPT_MODE);
+	public static String aesDecrypt(String input, byte[] key) {
+		return aesDecrypt(EncoderUtils.hexDecode(input), key);
+	}
+	
+	
+	// -- DES funciton --//
+	/**
+	* DES 加密参数
+	* byte[] key = "abcdefgh".getBytes();
+	* System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	*/
+	public final static byte[] CTYPT_KEY_BYTES = "dffxdfhy".getBytes();
+	
+	/**
+	 * DES 加密
+	 * byte[] key = "abcdefgh".getBytes();
+	 * System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	 */
+	public static byte[] desEncrypt(byte[] data, byte[] key){
+		return encrypt(data, key, DES);
+	}
+	
+	/**
+	* DES 加密
+	* byte[] key = "abcdefgh".getBytes();
+	* System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	*/
+	public static String desEncrypt(String data, byte[] key){
+		return EncoderUtils.hexEncode(desEncrypt(data.getBytes(), key));
+	}
+	
+	/**
+	 *DES 解密
+	 *byte[] key = "abcdefgh".getBytes();
+	 *System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	 */
+	public static String desDecrypt(byte[] data, byte[] key){
+		return decrypt(data, key, DES);
+	}
+	
+	/**
+	*DES 解密
+	*byte[] key = "abcdefgh".getBytes();
+	*System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	*/
+	public static String desDecrypt(String data, byte[] key){
+		return desDecrypt(EncoderUtils.hexDecode(data), key);
+	}
+	
+	/**
+	 * 使用AES/DES加密原始字符串.
+	 * 
+	 * @param input 原始输入字符数组
+	 * @param key 符合AES/DES要求的密钥
+	 */
+	public static byte[] encrypt(byte[] input, byte[] key, String algorithm) {
+		return code(input, key, Cipher.ENCRYPT_MODE, algorithm);
+	}
+	
+	/**
+	 * 使用AES/DES解密字符串, 返回原始字符串.
+	 * 
+	 * @param input Hex编码的加密字符串
+	 * @param key 符合AES要求的密钥
+	 */
+	public static String decrypt(byte[] input, byte[] key, String algorithm) {
+		final byte[] decryptResult = decrypt2Bytes(input, key, algorithm);
 		return new String(decryptResult);
 	}
-
+	
+	/**
+	 * 使用AES/DES解密字符串, 返回原始字符串.
+	 * 
+	 * @param input Hex编码的加密字符串
+	 * @param key 符合AES要求的密钥
+	 */
+	public static byte[] decrypt2Bytes(byte[] input, byte[] key, String algorithm) {
+		return code(input, key, Cipher.DECRYPT_MODE, algorithm);
+	}
+	
 	/**
 	 * 使用AES加密或解密无编码的原始字节数组, 返回无编码的字节数组结果.
 	 * 
@@ -126,10 +210,10 @@ public abstract class CryptoUtils {
 	 * @param key 符合AES要求的密钥
 	 * @param mode Cipher.ENCRYPT_MODE 或 Cipher.DECRYPT_MODE
 	 */
-	private static byte[] aes(byte[] input, byte[] key, int mode) {
+	private static byte[] code(byte[] input, byte[] key, int mode, String algorithm) {
 		try {
-			SecretKey secretKey = new SecretKeySpec(key, AES);
-			Cipher cipher = Cipher.getInstance(AES);
+			SecretKey secretKey = new SecretKeySpec(key, algorithm);
+			Cipher cipher = Cipher.getInstance(algorithm);
 			cipher.init(mode, secretKey);
 			return cipher.doFinal(input);
 		} catch (GeneralSecurityException e) {
@@ -137,58 +221,23 @@ public abstract class CryptoUtils {
 		}
 	}
 
-	/**
-	 * 使用AES加密或解密无编码的原始字节数组, 返回无编码的字节数组结果.
-	 * 
-	 * @param input 原始字节数组
-	 * @param key 符合AES要求的密钥
-	 * @param iv 初始向量
-	 * @param mode Cipher.ENCRYPT_MODE 或 Cipher.DECRYPT_MODE
-	 */
-	private static byte[] aes(byte[] input, byte[] key, byte[] iv, int mode) {
-		try {
-			SecretKey secretKey = new SecretKeySpec(key, AES);
-			IvParameterSpec ivSpec = new IvParameterSpec(iv);
-			Cipher cipher = Cipher.getInstance(AES_CBC);
-			cipher.init(mode, secretKey, ivSpec);
-			return cipher.doFinal(input);
-		} catch (GeneralSecurityException e) {
-			throw ExceptionUtils.unchecked(e);
-		}
-	}
-
-	/**
-	 * 生成AES密钥,返回字节数组, 默认长度为128位(16字节).
-	 */
-	public static byte[] generateAesKey() {
-		return generateAesKey(DEFAULT_AES_KEYSIZE);
-	}
-
-	/**
-	 * 生成AES密钥,可选长度为128,192,256位.
-	 */
-	public static byte[] generateAesKey(int keysize) {
-		try {
-			KeyGenerator keyGenerator = KeyGenerator.getInstance(AES);
-			keyGenerator.init(keysize);
-			SecretKey secretKey = keyGenerator.generateKey();
-			return secretKey.getEncoded();
-		} catch (GeneralSecurityException e) {
-			throw ExceptionUtils.unchecked(e);
-		}
-	}
-
-	/**
-	 * 生成随机向量,默认大小为cipher.getBlockSize(), 16字节.
-	 */
-	public static byte[] generateIV() {
-		byte[] bytes = new byte[DEFAULT_IVSIZE];
-		random.nextBytes(bytes);
-		return bytes;
-	}
-	
 	public static void main(String[] args) {
+		byte[] key = "dffxdfhy".getBytes();
+		String algorithm = "DES";
+		String encode = EncoderUtils.hexEncode(encrypt("abc".getBytes(), key, algorithm));
+		System.out.println(encode);
 		
-		System.out.println(aesDecrypt(aesEncrypt("abc".getBytes(), "test".getBytes()), "test".getBytes()));
+		String decode = decrypt(EncoderUtils.hexDecode(encode), key, algorithm);
+		System.out.println(decode);
+		
+		System.out.println(desDecrypt(desEncrypt("abc", key), key));
+		
+		byte[] aesKey = "dffxdfhydffxdfhy".getBytes();
+		String aesAlgorithm = "AES";
+		String aesEncode = EncoderUtils.hexEncode(encrypt("abc".getBytes(), aesKey, aesAlgorithm));
+		System.out.println(aesEncode);
+		
+		String aesDecode = decrypt(EncoderUtils.hexDecode(aesEncode), aesKey, aesAlgorithm);
+		System.out.println(aesDecode);
 	}
 }
