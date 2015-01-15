@@ -36,7 +36,7 @@ import org.springframework.util.Assert;
 /**
  * 反射工具类.
  * 
- * @author maurice
+ * @author AK
  */
 
 @SuppressWarnings({"unchecked"})
@@ -304,7 +304,35 @@ public abstract class ReflectionUtils {
 
 		return fields;
 	}
+	
+	/**
+	 * 
+	 * 更具类型获取o中的所有字段名称
+	 * 
+	 * @param targetClass
+	 *            目标对象Class
+	 * @param type
+	 *            要获取名称的类型
+	 * 
+	 * @return List
+	 */
+	public static List<String> getAccessibleFieldNames(
+			final Class targetClass, Class type) {
 
+		Assert.notNull(targetClass, "targetClass不能为空");
+		Assert.notNull(type, "type不能为空");
+
+		List<String> list = new ArrayList<String>();
+
+		for (Field field : targetClass.getDeclaredFields()) {
+			if (field.getType().equals(type)) {
+				list.add(field.getName());
+			}
+		}
+
+		return list;
+	}
+	
 	/**
 	 * 循环向上转型, 获取对象的DeclaredMethod,并强制设置为可访问. 如向上转型到Object仍无法找到, 返回null.
 	 * 
@@ -678,33 +706,6 @@ public abstract class ReflectionUtils {
 		return result;
 	}
 
-	/**
-	 * 
-	 * 更具类型获取o中的所有字段名称
-	 * 
-	 * @param targetClass
-	 *            目标对象Class
-	 * @param type
-	 *            要获取名称的类型
-	 * 
-	 * @return List
-	 */
-	public static List<String> getAccessibleFieldNames(
-			final Class targetClass, Class type) {
-
-		Assert.notNull(targetClass, "targetClass不能为空");
-		Assert.notNull(type, "type不能为空");
-
-		List<String> list = new ArrayList<String>();
-
-		for (Field field : targetClass.getDeclaredFields()) {
-			if (field.getType().equals(type)) {
-				list.add(field.getName());
-			}
-		}
-
-		return list;
-	}
 
 	/**
 	 * 通过反射, 获得Class定义中声明的父类的泛型参数的类型. 如无法找到, 返回Object.class，否则返回首个泛参数型类型

@@ -29,6 +29,15 @@ import org.slf4j.LoggerFactory;
 
 
 /**
+*  PROPAGATION_REQUIRED：支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。<br>
+ * PROPAGATION_SUPPORTS：支持当前事务，如果当前没有事务，就以非事务方式执行。<br>
+ * PROPAGATION_MANDATORY：支持当前事务，如果当前没有事务，就抛出异常。<br>
+ * PROPAGATION_REQUIRES_NEW：新建事务，如果当前存在事务，把当前事务挂起。<br>
+ * PROPAGATION_NOT_SUPPORTED：以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。<br>
+ * PROPAGATION_NEVER：以非事务方式执行，如果当前存在事务，则抛出异常。<br>
+ * PROPAGATION_NESTED：支持当前事务，如果当前事务存在，则执行一个嵌套事务，如果当前没有事务，就新建一个事务。
+ * 嵌套事务实现了隔离机制，例如B事务嵌套在A事务中，B失败不会影响A提交。而PROPAGATION_REQUIRED则全部回滚<br>
+ * 
  * 封装了 Hibernate3 原生 API 的 DAO 泛型基类. 通过 Hibernate 来操纵对象, 主要是 {@link Session} 的一些方法的二次封装和 HQL
  * 与 QBC 的一些简单检索. 请注意到这里的方法几乎都是基于事务下的, 如果为了性能要使用非事务的方法, 可以使用
  * {@link #getSession(false)} 来获取到 <code>session</code> 处理并手动将其 <code>close()</code>.

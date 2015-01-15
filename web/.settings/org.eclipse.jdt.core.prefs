@@ -1,5 +1,10 @@
-#Wed Dec 24 10:20:15 CST 2014
-org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.7
-eclipse.preferences.version=1
-org.eclipse.jdt.core.compiler.source=1.7
+#Mon Jan 12 23:15:00 CST 2015
+encoding/src/test/java=UTF-8
 org.eclipse.jdt.core.compiler.compliance=1.7
+encoding/src/main/resources=UTF-8
+encoding/src/main/java=UTF-8
+org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.7
+encoding/src/main/webapp=UTF-8
+eclipse.preferences.version=1
+encoding/src/test/resources=UTF-8
+org.eclipse.jdt.core.compiler.source=1.7

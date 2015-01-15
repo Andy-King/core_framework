@@ -17,7 +17,8 @@ import javax.crypto.spec.SecretKeySpec;
  * 
  * @author calvin
  */
-public class CryptoUtils {
+public abstract class CryptoUtils {
+	
 	private static final String AES = "AES";
 	private static final String AES_CBC = "AES/CBC/PKCS5Padding";
 	private static final String HMACSHA1 = "HmacSHA1";
@@ -184,5 +185,10 @@ public class CryptoUtils {
 		byte[] bytes = new byte[DEFAULT_IVSIZE];
 		random.nextBytes(bytes);
 		return bytes;
+	}
+	
+	public static void main(String[] args) {
+		
+		System.out.println(aesDecrypt(aesEncrypt("abc".getBytes(), "test".getBytes()), "test".getBytes()));
 	}
 }

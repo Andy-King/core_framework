@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 /**
@@ -202,6 +201,19 @@ public abstract class WebUtils {
 		
 		return list;
 		
+	}
+	
+	/**
+	 * 从request中获取值, 为空取默认值
+	 * eg: request.getParameter(name);
+	 * @param request
+	 * @param name
+	 * @param defaultValue
+	 * @return
+	 */
+	public static String getParameter(ServletRequest request, String name, String defaultValue){
+		final String value = request.getParameter(name);
+		return org.jee.framework.core.utils.StringUtils.isBlank(value) ? defaultValue : value;
 	}
 	
 }

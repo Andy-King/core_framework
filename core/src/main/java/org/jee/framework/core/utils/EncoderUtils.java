@@ -3,7 +3,6 @@ package org.jee.framework.core.utils;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
@@ -13,17 +12,14 @@ import org.apache.commons.lang3.Validate;
 /**
  * 封装各种格式的编码解码工具类.
  * 
- * 
  * @author AK
  */
-public class EncoderUtils {
+public abstract class EncoderUtils {
 	
 	private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 	private static final String DEFAULT_URL_ENCODING = "UTF-8";
 
-	private EncoderUtils() {
-	}
 
 	/**
 	 * Hex编码, byte[]->String.
@@ -152,25 +148,47 @@ public class EncoderUtils {
 
 	/**
 	 * URL 编码, Encode默认为UTF-8. 
+	 * @param part
+	 * @param enc 编码
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String urlEncode(String part, String enc) throws UnsupportedEncodingException {
+		return URLEncoder.encode(part, enc);
+	}
+
+	/**
+	 * URL 解码, Encode默认为UTF-8. 
+	 * @param part
+	 * @param enc 编码
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String urlDecode(String part, String enc) throws UnsupportedEncodingException {
+		return URLDecoder.decode(part, enc);
+	}
+	
+	/**
+	 * URL 编码, Encode默认为UTF-8. 
 	 */
 	public static String urlEncode(String part) {
 		try {
 			return URLEncoder.encode(part, DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			ExceptionUtils.throwRuntimeException("urlEncode error:", e);
 		}
 		return part;
 	}
-
+	
 	/**
 	 * URL 解码, Encode默认为UTF-8. 
 	 */
 	public static String urlDecode(String part) {
-
+		
 		try {
 			return URLDecoder.decode(part, DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			ExceptionUtils.throwRuntimeException("urlDecode error:", e);
 		}
 		return part;
 	}

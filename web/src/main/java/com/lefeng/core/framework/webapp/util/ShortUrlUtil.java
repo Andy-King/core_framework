@@ -36,7 +36,7 @@ public class ShortUrlUtil {
 	private static String[] getShortURLs(String url) {
 		
 		// 对传入的网址进行 md5 加密
-		String md5Url = EncryptUtils.getMD5String(url);
+		String md5Url = EncryptUtils.md5(url);
 		// 结果集, 一个 md5 可以得到 4 个结果
 		String[] results = new String[4];
 		

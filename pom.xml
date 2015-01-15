@@ -17,7 +17,14 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
-
+	<description>
+		jee-framework说明：
+		1.采用Java7编译，请注意，此版本之后请使用Java7；
+		2.Page类增加防注入；
+		3.Spring主框架升级到3.2.6-RELEASE；
+		4.增加DAO层Seeker通用查询参数接口和GeneralSeeker通用查询参数对象类；
+		5.增加工具方法
+	</description>
     <scm>
         <connection></connection>
         <developerConnection></developerConnection>
@@ -41,6 +48,7 @@
     <properties>
         <!-- Application settings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<build.version>1.7</build.version>
         <copyright.year>2014</copyright.year>
         <dao.framework>hibernate</dao.framework>
         <web.framework>spring</web.framework>
@@ -431,14 +439,12 @@
                <version>${fastjson.version}</version>
            </dependency>
 		   <!-- json -->
-		   
 		    <!-- xstream start -->
 		    <dependency>
 				<groupId>com.thoughtworks.xstream</groupId>
 				<artifactId>xstream</artifactId>
 				<version>${xstream.version}</version>
 			</dependency>
-		   
            <dependency>
                <groupId>com.fasterxml.jackson.core</groupId>
                <artifactId>jackson-databind</artifactId>
@@ -736,8 +742,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.1</version>
                     <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
+                        <source>${build.version}</source>
+                        <target>${build.version}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>

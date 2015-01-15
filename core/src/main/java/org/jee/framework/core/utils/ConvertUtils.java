@@ -15,7 +15,7 @@ import org.apache.commons.beanutils.converters.DateConverter;
  * @author AK
  *
  */
-public class ConvertUtils extends org.apache.commons.beanutils.ConvertUtils{
+public abstract class ConvertUtils extends org.apache.commons.beanutils.ConvertUtils{
 	
 	static {
 		registerDateConverter("yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss");
