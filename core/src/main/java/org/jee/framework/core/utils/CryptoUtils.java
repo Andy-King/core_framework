@@ -1,5 +1,6 @@
 package org.jee.framework.core.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 
@@ -17,6 +18,7 @@ import javax.crypto.spec.SecretKeySpec;
  * 注:AES的key的长度需要是8的倍数,eg:byte[] key = "abcdefghabcdefgh".getBytes();
  * 
  * 调用说明:
+ * -- DES
  * byte[] key = KEY_DES_BYTES;
  * String algorithm = "DES";
  * String encode = EncoderUtils.hexEncode(encrypt("abc".getBytes(), key, algorithm));
@@ -25,15 +27,22 @@ import javax.crypto.spec.SecretKeySpec;
  * String decode = decrypt(EncoderUtils.hexDecode(encode), key, algorithm);
  * System.out.println(decode);
  * 
- * System.out.println(desDecrypt(desEncrypt("abc", key), key));
+ * System.out.println(decrypt4Des(encrypt4Des("abc", key), key));
  * 
+ * -- AES
  * byte[] aesKey = KEY_AES_BYTES;
  * String aesAlgorithm = "AES";
- * String aesEncode = EncoderUtils.hexEncode(encrypt("abc".getBytes(), aesKey, aesAlgorithm));
- * System.out.println(aesEncode);
+ * String encrypt4Aes = EncoderUtils.hexEncode(encrypt("abc".getBytes(), aesKey, aesAlgorithm));
+ * System.out.println(encrypt4Aes);
  * 
- * String aesDecode = decrypt(EncoderUtils.hexDecode(aesEncode), aesKey, aesAlgorithm);
+ * String aesDecode = decrypt(EncoderUtils.hexDecode(encrypt4Aes), aesKey, aesAlgorithm);
  * System.out.println(aesDecode);
+ * 
+ * -- RC4
+ * System.out.println(decrypt(encrypt("abc".getBytes(), KEY_RC4_BYTES, RC4), KEY_RC4_BYTES, RC4));
+ * 
+ * -- 3DES
+ * System.out.println(decrypt(encrypt("abc".getBytes(), KEY_3DES_BYTES, THREE_DES), KEY_3DES_BYTES, THREE_DES));
  * 
  * 输出结果:
  * 59dc29da43b9636e
@@ -41,14 +50,67 @@ import javax.crypto.spec.SecretKeySpec;
  * abc
  * 30cf4f17ada17b41efcb0e6f2bb55999
  * abc
+ * abc
+ * abc
  * 
  * </pre>
  * @author AK
  */
 public abstract class CryptoUtils {
-	
+	//DES、3DES、AES、IDEA、RC4、RC5
+	/**
+	 * key长度为8的倍数bytes
+	 */
 	public static final String AES = "AES";
+	
+	/**
+	* AES 加密参数
+	* byte[] key = "abcdefghabcdefgh".getBytes();
+	* System.out.println(aesDecrypt(aesEncrypt("abc", key), key));
+	*/
+	public final static byte[] KEY_AES_BYTES = "Q!Om01@*Wei$3vp%".getBytes();
+	
+	/**
+	 * key长度为16bytes
+	 */
+	public static final String RC4 = "RC4"; //定义 加密算法,可用 DES,DESede,Blowfish
+	
+	/**
+	* <pre>
+	* RC4 加密参数
+	* byte[] key = "abcdefgh".getBytes();
+	* System.out.println(decrypt(encrypt("abc".getBytes(), KEY_RC4_BYTES, RC4), KEY_RC4_BYTES, RC4));
+	* </pre>
+	*/
+	public final static byte[] KEY_RC4_BYTES = "&*jw@jv-Q!Om01@*".getBytes();
+	
+	/**
+	 * key长度为8bytes,不能超
+	 */
 	public static final String DES = "DES"; //定义 加密算法,可用 DES,DESede,Blowfish
+	
+	/**
+	* <pre>
+	* DES 加密参数
+	* byte[] key = "abcdefgh".getBytes();
+	* System.out.println(decrypt4Des(encrypt4Des("abc", key), key));
+	* </pre>
+	*/
+	public final static byte[] KEY_DES_BYTES = "Q!Om01@*".getBytes();
+	
+	/**
+	 * key长度为24bytes,不能超
+	 */
+	public static final String THREE_DES = "DESede"; //定义 加密算法,可用 DES,DESede,Blowfish
+	
+	/**
+	* <pre>
+	* 3DES 加密参数
+	* byte[] key = "abcdefghabcdefghabcdefgh".getBytes();
+	* System.out.println(decrypt(encrypt("abc".getBytes(), KEY_3DES_BYTES, THREE_DES), KEY_3DES_BYTES, THREE_DES));
+	* </pre>
+	*/
+	public final static byte[] KEY_3DES_BYTES = "&j^_^oQ!Om01@*&*jw@jv-Q!".getBytes();
 	
 	private static final String HMACSHA1 = "HmacSHA1";
 
@@ -101,12 +163,6 @@ public abstract class CryptoUtils {
 
 	// -- AES funciton --//
 	/**
-	* AES 加密参数
-	* byte[] key = "abcdefghabcdefgh".getBytes();
-	* System.out.println(aesDecrypt(aesEncrypt("abc", key), key));
-	*/
-	public final static byte[] KEY_AES_BYTES = "Q!Om01@*Wei$3vp%".getBytes();
-	/**
 	 * <pre>
 	 * 使用AES加密原始字符串.
 	 * 注:AES的key的长度需要是8的倍数,eg:byte[] key = "abcdefghabcdefgh".getBytes();
@@ -114,7 +170,7 @@ public abstract class CryptoUtils {
 	 * @param input 原始输入字符数组
 	 * @param key 符合AES要求的密钥
 	 */
-	public static byte[] aesEncrypt(byte[] input, byte[] key) {
+	public static byte[] encrypt4Aes(byte[] input, byte[] key) {
 		return encrypt(input, key, AES);
 	}
 	
@@ -126,8 +182,8 @@ public abstract class CryptoUtils {
 	 * @param input 原始输入字符数组
 	 * @param key 符合AES要求的密钥
 	 */
-	public static String aesEncrypt(String input, byte[] key) {
-		return EncoderUtils.hexEncode(aesEncrypt(input.getBytes(), key));
+	public static String encrypt4Aes(String input, byte[] key) {
+		return EncoderUtils.hexEncode(encrypt4Aes(input.getBytes(), key));
 	}
 	
 	/**
@@ -139,7 +195,7 @@ public abstract class CryptoUtils {
 	 * @param input Hex编码的加密字符串
 	 * @param key 符合AES要求的密钥
 	 */
-	public static String aesDecrypt(byte[] input, byte[] key) {
+	public static String decrypt4Aes(byte[] input, byte[] key) {
 		return decrypt(input, key, AES);
 	}
 	
@@ -152,33 +208,24 @@ public abstract class CryptoUtils {
 	 * @param input Hex编码的加密字符串
 	 * @param key 符合AES要求的密钥
 	 */
-	public static String aesDecrypt(String input, byte[] key) {
-		return aesDecrypt(EncoderUtils.hexDecode(input), key);
+	public static String decrypt4AES(String input, byte[] key) {
+		return decrypt4Aes(EncoderUtils.hexDecode(input), key);
 	}
 	
 	
 	// -- DES funciton --//
 	/**
-	* <pre>
-	* DES 加密参数
-	* byte[] key = "abcdefgh".getBytes();
-	* System.out.println(desDecrypt(desEncrypt("abc", key), key));
-	* </pre>
-	*/
-	public final static byte[] KEY_DES_BYTES = "Q!Om01@*".getBytes();
-	
-	/**
 	 * <pre>
 	 * DES 加密
 	 * byte[] key = "abcdefgh".getBytes();
-	 * System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	 * System.out.println(decrypt4Des(encrypt4Des("abc", key), key));
 	 * </pre>
 	 *
 	 * @param data
 	 * @param key
 	 * @return
 	 */
-	public static byte[] desEncrypt(byte[] data, byte[] key){
+	public static byte[] encrypt4Des(byte[] data, byte[] key){
 		return encrypt(data, key, DES);
 	}
 	
@@ -186,29 +233,29 @@ public abstract class CryptoUtils {
 	* <pre>
 	* DES 加密
 	* byte[] key = "abcdefgh".getBytes();
-	* System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	* System.out.println(decrypt4Des(encrypt4Des("abc", key), key));
 	* </pre>
 	* 
 	* @param data
 	* @param key
 	* @return
 	*/
-	public static String desEncrypt(String data, byte[] key){
-		return EncoderUtils.hexEncode(desEncrypt(data.getBytes(), key));
+	public static String encrypt4Des(String data, byte[] key){
+		return EncoderUtils.hexEncode(encrypt4Des(data.getBytes(), key));
 	}
 	
 	/**
 	 * <pre>
 	 * DES 解密
 	 * byte[] key = "abcdefgh".getBytes();
-	 * System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	 * System.out.println(decrypt4Des(encrypt4Des("abc", key), key));
 	 * </pre>
 	 *
 	 * @param data
 	 * @param key
 	 * @return
 	 */
-	public static String desDecrypt(byte[] data, byte[] key){
+	public static String decrypt4Des(byte[] data, byte[] key){
 		return decrypt(data, key, DES);
 	}
 	
@@ -216,18 +263,18 @@ public abstract class CryptoUtils {
 	 * <pre>
 	 * DES 解密
 	 * byte[] key = "abcdefgh".getBytes();
-	 * System.out.println(desDecrypt(desEncrypt("abc", key), key));
+	 * System.out.println(decrypt4Des(encrypt4Des("abc", key), key));
 	 * </pre>
 	 * @param data
 	 * @param key
 	 * @return
 	 */
-	public static String desDecrypt(String data, byte[] key){
-		return desDecrypt(EncoderUtils.hexDecode(data), key);
+	public static String decrypt4Des(String data, byte[] key){
+		return decrypt4Des(EncoderUtils.hexDecode(data), key);
 	}
 	
 	/**
-	 * 使用AES/DES加密原始字符串.
+	 * 使用AES/DES/RC4加密原始字符串.
 	 * 
 	 * @param input 原始输入字符数组
 	 * @param key 符合AES/DES要求的密钥
@@ -237,7 +284,7 @@ public abstract class CryptoUtils {
 	}
 	
 	/**
-	 * 使用AES/DES解密字符串, 返回原始字符串.
+	 * 使用AES/DES/RC4解密字符串, 返回原始字符串.
 	 * 
 	 * @param input Hex编码的加密字符串
 	 * @param key 符合AES要求的密钥
@@ -274,20 +321,22 @@ public abstract class CryptoUtils {
 			throw ExceptionUtils.unchecked(e);
 		}
 	}
+	
+	public static void main(String[] args) throws UnsupportedEncodingException {
+		//DES、3DES、AES、IDEA、RC4、RC5
+		//Security.addProvider(new com.sun.crypto.provider.SunJCE());
 
-	public static void main(String[] args) {
-		byte[] key = KEY_DES_BYTES;
-		String algorithm = "DES";
-		String encode = EncoderUtils.hexEncode(encrypt("abc".getBytes(), key, algorithm));
+		String encode = EncoderUtils.hexEncode(encrypt("abc".getBytes(), KEY_3DES_BYTES, THREE_DES));
 		System.out.println(encode);
 		
-		String decode = decrypt(EncoderUtils.hexDecode(encode), key, algorithm);
+		String decode = decrypt(EncoderUtils.hexDecode(encode), KEY_3DES_BYTES, THREE_DES);
 		System.out.println(decode);
+		System.out.println(decrypt(encrypt("abc".getBytes(), KEY_RC4_BYTES, RC4), KEY_RC4_BYTES, RC4));
+		byte[] keyDesBytes = "abcdefgh".getBytes();
+		System.out.println(decrypt4Des(encrypt4Des("abc", keyDesBytes), keyDesBytes));
 		
-		System.out.println(desDecrypt(desEncrypt("abc", key), key));
-		
-		byte[] aesKey = KEY_AES_BYTES;
-		String aesAlgorithm = "AES";
+		byte[] aesKey = KEY_AES_BYTES ;
+		String aesAlgorithm = "RC4";
 		String aesEncode = EncoderUtils.hexEncode(encrypt("abc".getBytes(), aesKey, aesAlgorithm));
 		System.out.println(aesEncode);
 		
