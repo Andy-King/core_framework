@@ -47,7 +47,7 @@
     <properties>
         <!-- Application settings -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<build.version>1.7</build.version>
+		<build.version>1.6</build.version>
         <copyright.year>2014</copyright.year>
         <dao.framework>hibernate</dao.framework>
         <web.framework>spring</web.framework>
@@ -73,7 +73,7 @@
 		<logback.version>1.1.1</logback.version>
         <cxf.version>2.7.10</cxf.version>
 
-		<!-- JSP & SERVLET -->
+		<!-- JEE Web libs -->
 		<!--<servlet.version>3.1.0</servlet.version>-->
 		<servlet.version>2.5</servlet.version>
 		<jsp.version>2.1</jsp.version>
@@ -344,6 +344,83 @@
 			</dependency>
 			<!-- log end -->
 			<!-- Datasource end  -->
+
+			<!-- j2ee web spec -->
+		   	<dependency>
+			   <groupId>javax.el</groupId>
+			   <artifactId>javax.el-api</artifactId>
+			   <version>${javax.el.api.version}</version>
+			   <scope>provided</scope>
+			</dependency>
+			<dependency>
+			   <groupId>javax.servlet</groupId>
+			   <artifactId>servlet-api</artifactId>
+			   <version>${servlet.version}</version>
+			   <scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>${jsp.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+			   <groupId>javax.servlet</groupId>
+			   <artifactId>jstl</artifactId>
+			   <version>${servlet.jstl.version}</version>
+			</dependency>
+			<dependency>
+			   <groupId>taglibs</groupId>
+			   <artifactId>standard</artifactId>
+			   <version>${taglibs.version}</version>
+			</dependency>
+           
+			<!-- apache shiro security web -->
+			<dependency>
+			   <groupId>org.apache.shiro</groupId>
+			   <artifactId>shiro-core</artifactId>
+			   <version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+			   <groupId>org.apache.shiro</groupId>
+			   <artifactId>shiro-web</artifactId>
+			   <version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+			   <groupId>org.apache.shiro</groupId>
+			   <artifactId>shiro-ehcache</artifactId>
+			   <exclusions>
+				   <exclusion>
+					   <groupId>net.sf.ehcache</groupId>
+					   <artifactId>ehcache-core</artifactId>
+				   </exclusion>
+			   </exclusions>
+			   <version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+			   <groupId>org.apache.shiro</groupId>
+			   <artifactId>shiro-spring</artifactId>
+			   <version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+			   <groupId>org.apache.shiro</groupId>
+			   <artifactId>shiro-cas</artifactId>
+			   <version>${shiro.version}</version>
+			</dependency>
+
+			<!-- html template engine -->
+			<dependency>
+			   <groupId>org.freemarker</groupId>
+			   <artifactId>freemarker</artifactId>
+			   <version>${freemarker.version}</version>
+			</dependency>
+			
+			<!--bootstrap start-->
+			<dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+                <version>${bootstrap.version}</version>
+            </dependency>			
 			
 			<!-- ws start -->
 			<dependency>
@@ -373,7 +450,84 @@
 			   <version>2.2.7</version>
 			</dependency>
 			<!-- ws end -->
+			
+			<!-- test start -->
+			<dependency>
+			   <groupId>junit</groupId>
+			   <artifactId>junit</artifactId>
+			   <version>${junit.version}</version>
+			</dependency>
 
+
+			<dependency>
+			   <groupId>org.dbunit</groupId>
+			   <artifactId>dbunit</artifactId>
+			   <version>${dbunit.version}</version>
+			</dependency>
+
+			<dependency>
+			   <groupId>org.seleniumhq.selenium</groupId>
+			   <artifactId>selenium-java</artifactId>
+			   <version>${selenium.version}</version>
+			   <exclusions>
+				   <exclusion>
+					   <groupId>org.seleniumhq.selenium</groupId>
+					   <artifactId>selenium-android-driver</artifactId>
+				   </exclusion>
+				   <exclusion>
+					   <groupId>org.seleniumhq.selenium</groupId>
+					   <artifactId>selenium-iphone-driver</artifactId>
+				   </exclusion>
+				   <exclusion>
+					   <groupId>org.seleniumhq.selenium</groupId>
+					   <artifactId>selenium-htmlunit-driver</artifactId>
+				   </exclusion>
+				   <exclusion>
+					   <groupId>org.seleniumhq.selenium</groupId>
+					   <artifactId>selenium-safari-driver</artifactId>
+				   </exclusion>
+				   <exclusion>
+					   <groupId>commons-logging</groupId>
+					   <artifactId>commons-logging</artifactId>
+				   </exclusion>
+			   </exclusions>
+			</dependency>
+
+			<dependency>
+			   <groupId>org.seleniumhq.selenium</groupId>
+			   <artifactId>selenium-remote-driver</artifactId>
+			   <version>${selenium.version}</version>
+			   <exclusions>
+				   <exclusion>
+					   <groupId>cglib</groupId>
+					   <artifactId>cglib-nodep</artifactId>
+				   </exclusion>
+				   <exclusion>
+					   <groupId>commons-logging</groupId>
+					   <artifactId>commons-logging</artifactId>
+				   </exclusion>
+			   </exclusions>
+			</dependency>
+
+			<!-- jetty -->
+			<dependency>
+			   <groupId>org.eclipse.jetty.aggregate</groupId>
+			   <artifactId>jetty-webapp</artifactId>
+			   <version>${jetty.version}</version>
+			</dependency>
+			<dependency>
+			   <groupId>org.eclipse.jetty</groupId>
+			   <artifactId>jetty-jsp</artifactId>
+			   <version>${jetty.version}</version>
+			</dependency>
+			<dependency>
+			   <groupId>org.eclipse.jetty</groupId>
+			   <artifactId>jetty-start</artifactId>
+			   <version>${jetty.version}</version>
+			</dependency>
+			<!-- test end -->
+			
+			<!-- Utils libs -->
 			<!-- commons start -->
 			<dependency>
 			   <groupId>org.apache.tomcat</groupId>
@@ -479,7 +633,6 @@
 			</dependency>
 			<!-- commons end -->
 
-			<!-- web start -->
 			<!-- json 相关jar包 -->
 			<dependency>
 			   <groupId>com.metaparadigm</groupId>
@@ -490,13 +643,6 @@
 			   <groupId>com.alibaba</groupId>
 			   <artifactId>fastjson</artifactId>
 			   <version>${fastjson.version}</version>
-			</dependency>
-			<!-- json -->
-		    <!-- xstream start -->
-		    <dependency>
-				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>xstream</artifactId>
-				<version>${xstream.version}</version>
 			</dependency>
 			<dependency>
 			   <groupId>com.fasterxml.jackson.core</groupId>
@@ -523,153 +669,6 @@
 			   <artifactId>jackson-datatype-hibernate4</artifactId>
 			   <version>${jackson.version}</version>
 			</dependency>
-			
-			<!-- j2ee web spec -->
-		   	<dependency>
-			   <groupId>javax.el</groupId>
-			   <artifactId>javax.el-api</artifactId>
-			   <version>${javax.el.api.version}</version>
-			   <scope>provided</scope>
-			</dependency>
-			<dependency>
-			   <groupId>javax.servlet</groupId>
-			   <artifactId>servlet-api</artifactId>
-			   <version>${servlet.version}</version>
-			   <scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet.jsp</groupId>
-				<artifactId>jsp-api</artifactId>
-				<version>${jsp.version}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-			   <groupId>javax.servlet</groupId>
-			   <artifactId>jstl</artifactId>
-			   <version>${servlet.jstl.version}</version>
-			</dependency>
-			<dependency>
-			   <groupId>taglibs</groupId>
-			   <artifactId>standard</artifactId>
-			   <version>${taglibs.version}</version>
-			</dependency>
-           
-			<!-- apache shiro security web -->
-			<dependency>
-			   <groupId>org.apache.shiro</groupId>
-			   <artifactId>shiro-core</artifactId>
-			   <version>${shiro.version}</version>
-			</dependency>
-			<dependency>
-			   <groupId>org.apache.shiro</groupId>
-			   <artifactId>shiro-web</artifactId>
-			   <version>${shiro.version}</version>
-			</dependency>
-			<dependency>
-			   <groupId>org.apache.shiro</groupId>
-			   <artifactId>shiro-ehcache</artifactId>
-			   <exclusions>
-				   <exclusion>
-					   <groupId>net.sf.ehcache</groupId>
-					   <artifactId>ehcache-core</artifactId>
-				   </exclusion>
-			   </exclusions>
-			   <version>${shiro.version}</version>
-			</dependency>
-			<dependency>
-			   <groupId>org.apache.shiro</groupId>
-			   <artifactId>shiro-spring</artifactId>
-			   <version>${shiro.version}</version>
-			</dependency>
-			<dependency>
-			   <groupId>org.apache.shiro</groupId>
-			   <artifactId>shiro-cas</artifactId>
-			   <version>${shiro.version}</version>
-			</dependency>
-
-			<!-- html template engine -->
-			<dependency>
-			   <groupId>org.freemarker</groupId>
-			   <artifactId>freemarker</artifactId>
-			   <version>${freemarker.version}</version>
-			</dependency>
-			<!-- web end -->
-
-			<!-- test start -->
-			<dependency>
-			   <groupId>junit</groupId>
-			   <artifactId>junit</artifactId>
-			   <version>${junit.version}</version>
-			</dependency>
-
-
-			<dependency>
-			   <groupId>org.dbunit</groupId>
-			   <artifactId>dbunit</artifactId>
-			   <version>${dbunit.version}</version>
-			</dependency>
-
-			<dependency>
-			   <groupId>org.seleniumhq.selenium</groupId>
-			   <artifactId>selenium-java</artifactId>
-			   <version>${selenium.version}</version>
-			   <exclusions>
-				   <exclusion>
-					   <groupId>org.seleniumhq.selenium</groupId>
-					   <artifactId>selenium-android-driver</artifactId>
-				   </exclusion>
-				   <exclusion>
-					   <groupId>org.seleniumhq.selenium</groupId>
-					   <artifactId>selenium-iphone-driver</artifactId>
-				   </exclusion>
-				   <exclusion>
-					   <groupId>org.seleniumhq.selenium</groupId>
-					   <artifactId>selenium-htmlunit-driver</artifactId>
-				   </exclusion>
-				   <exclusion>
-					   <groupId>org.seleniumhq.selenium</groupId>
-					   <artifactId>selenium-safari-driver</artifactId>
-				   </exclusion>
-				   <exclusion>
-					   <groupId>commons-logging</groupId>
-					   <artifactId>commons-logging</artifactId>
-				   </exclusion>
-			   </exclusions>
-			</dependency>
-
-			<dependency>
-			   <groupId>org.seleniumhq.selenium</groupId>
-			   <artifactId>selenium-remote-driver</artifactId>
-			   <version>${selenium.version}</version>
-			   <exclusions>
-				   <exclusion>
-					   <groupId>cglib</groupId>
-					   <artifactId>cglib-nodep</artifactId>
-				   </exclusion>
-				   <exclusion>
-					   <groupId>commons-logging</groupId>
-					   <artifactId>commons-logging</artifactId>
-				   </exclusion>
-			   </exclusions>
-			</dependency>
-
-			<!-- jetty -->
-			<dependency>
-			   <groupId>org.eclipse.jetty.aggregate</groupId>
-			   <artifactId>jetty-webapp</artifactId>
-			   <version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-			   <groupId>org.eclipse.jetty</groupId>
-			   <artifactId>jetty-jsp</artifactId>
-			   <version>${jetty.version}</version>
-			</dependency>
-			<dependency>
-			   <groupId>org.eclipse.jetty</groupId>
-			   <artifactId>jetty-start</artifactId>
-			   <version>${jetty.version}</version>
-			</dependency>
-			<!-- test end -->
 
 			<!-- 5) Google Project -->
 			<dependency>
@@ -687,13 +686,12 @@
 			   <artifactId>guava</artifactId>
 			   <version>${google.guava.version}</version>
 			</dependency>			
-			<!--bootstrap start-->
-			<dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>bootstrap</artifactId>
-                <version>${bootstrap.version}</version>
-            </dependency>
-			
+		    <!-- xstream start -->
+		    <dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>${xstream.version}</version>
+			</dependency>			
 			<!-- redis client -->
 			<dependency>
 				<groupId>redis.clients</groupId>
@@ -795,6 +793,33 @@
 			</exclusions>
 		</dependency>
     </dependencies>
+
+    <pluginRepositories>
+
+        <pluginRepository>
+            <id>oschina Releases</id>
+            <name>oschina Releases</name>
+            <url>http://maven.oschina.net/content/groups/public</url>
+        </pluginRepository>
+
+        <pluginRepository>
+            <id>maven2-repo</id>
+            <name>maven2 Repository</name>
+            <url>http://repo1.maven.org/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>Codehaus repository</id>
+            <url>http://repository.codehaus.org/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>maven-db-plugin-repo</id>
+            <name>maven db plugin repository</name>
+            <url>https://maven-db-plugin.googlecode.com/svn/maven/repo</url>
+            <layout>default</layout>
+        </pluginRepository>
+
+    </pluginRepositories>
+	
     <reporting>
         <plugins>
             <plugin>
@@ -831,47 +856,22 @@
                 <artifactId>maven-jxr-plugin</artifactId>
                 <version>2.3</version>
             </plugin>
+			<!-- pmd Java程序代码检查工具 -->
             <plugin>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <configuration>
                     <linkXRef>true</linkXRef>
-                    <targetJdk>1.6</targetJdk>
+                    <targetJdk>${build.version}</targetJdk>
                 </configuration>
                 <version>3.0.1</version>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>2.16</version>
-            </plugin>
+            </plugin>			
         </plugins>
     </reporting>
 
-    <pluginRepositories>
-
-        <pluginRepository>
-            <id>oschina Releases</id>
-            <name>oschina Releases</name>
-            <url>http://maven.oschina.net/content/groups/public</url>
-        </pluginRepository>
-
-        <pluginRepository>
-            <id>maven2-repo</id>
-            <name>maven2 Repository</name>
-            <url>http://repo1.maven.org/maven2/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>Codehaus repository</id>
-            <url>http://repository.codehaus.org/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>maven-db-plugin-repo</id>
-            <name>maven db plugin repository</name>
-            <url>https://maven-db-plugin.googlecode.com/svn/maven/repo</url>
-            <layout>default</layout>
-        </pluginRepository>
-
-    </pluginRepositories>	
-    
     <!-- 插件配置 -->
     <build>
         <pluginManagement>
@@ -1091,7 +1091,15 @@
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>2.1</version>
                 </plugin>
-                
+				<!-- findbugs 静态分析工具 -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>2.5.2</version>
+					<configuration>
+						<xmlOutput>true</xmlOutput>
+					</configuration>
+				</plugin>                
             </plugins>
         </pluginManagement>
     </build>
