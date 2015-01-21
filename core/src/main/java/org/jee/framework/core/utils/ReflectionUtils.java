@@ -21,6 +21,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
@@ -126,7 +128,24 @@ public abstract class ReflectionUtils {
 			throw convertReflectionExceptionToUnchecked(e);
 		}
 	}
+	
+	/**
+	 * 直接调用对象方法, 无视private/protected修饰符，
+	 * 用于一次性调用的情况，否则应使用getAccessibleMethodByName()函数获得Method后反复调用.
+	 * 只匹配函数名，如果有多个同名函数调用第一个。
+	 */
+	public static Object invokeMethodByName(final Object obj, final String methodName, final Object[] args) {
+		Method method = getAccessibleMethodByName(obj, methodName);
+		if (method == null) {
+			throw new IllegalArgumentException("Could not find method [" + methodName + "] on target [" + obj + "]");
+		}
 
+		try {
+			return method.invoke(obj, args);
+		} catch (Exception e) {
+			throw convertReflectionExceptionToUnchecked(e);
+		}
+	}
 	/**
 	 * 判断obj参数是否存在fiedlName字段
 	 * 
@@ -332,6 +351,49 @@ public abstract class ReflectionUtils {
 
 		return list;
 	}
+	
+	/**
+	 * 循环向上转型, 获取对象的DeclaredMethod,并强制设置为可访问.
+	 * 如向上转型到Object仍无法找到, 返回null.
+	 * 只匹配函数名。
+	 * 
+	 * 用于方法需要被多次调用的情况. 先使用本函数先取得Method,然后调用Method.invoke(Object obj, Object... args)
+	 */
+	public static Method getAccessibleMethodByName(final Object obj, final String methodName) {
+		Validate.notNull(obj, "object can't be null");
+		Validate.notBlank(methodName, "methodName can't be blank");
+
+		for (Class<?> searchType = obj.getClass(); searchType != Object.class; searchType = searchType.getSuperclass()) {
+			Method[] methods = searchType.getDeclaredMethods();
+			for (Method method : methods) {
+				if (method.getName().equals(methodName)) {
+					makeAccessible(method);
+					return method;
+				}
+			}
+		}
+		return null;
+	}	
+	
+	/**
+	 * 改变private/protected的方法为public，尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
+	 */
+	public static void makeAccessible(Method method) {
+		if ((!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(method.getDeclaringClass().getModifiers()))
+				&& !method.isAccessible()) {
+			method.setAccessible(true);
+		}
+	}
+
+	/**
+	 * 改变private/protected的成员变量为public，尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
+	 */
+	public static void makeAccessible(Field field) {
+		if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers()) || Modifier
+				.isFinal(field.getModifiers())) && !field.isAccessible()) {
+			field.setAccessible(true);
+		}
+	}	
 	
 	/**
 	 * 循环向上转型, 获取对象的DeclaredMethod,并强制设置为可访问. 如向上转型到Object仍无法找到, 返回null.
@@ -706,67 +768,74 @@ public abstract class ReflectionUtils {
 		return result;
 	}
 
-
 	/**
-	 * 通过反射, 获得Class定义中声明的父类的泛型参数的类型. 如无法找到, 返回Object.class，否则返回首个泛参数型类型
-	 * 
-	 * <pre>
-	 * 例如
-	 * public UserDao extends HibernateDao<User>
-	 * </pre>
-	 * 
-	 * @param targetClass
-	 *            要反射的目标对象Class
-	 * @return Object.clss或者T.class
+	 * 通过反射返回原始类型
+	 * @param instance
+	 * @return
 	 */
-	public static <T> Class<T> getSuperClassGenricType(final Class targetClass) {
-		return getSuperClassGenricType(targetClass, 0);
+	public static Class<?> getOriginalClass(Object instance) {
+		Assert.notNull(instance, "Instance must not be null");
+		final Class<?> clazz = instance.getClass();
+		if ((clazz != null) && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
+			Class<?> superClass = clazz.getSuperclass();
+			if ((superClass != null) && !Object.class.equals(superClass)) {
+				return superClass;
+			}
+		}
+		return clazz;
+		
 	}
 
 	/**
-	 * 通过反射, 获得Class定义中声明的父类的泛型参数的类型. 如无法找到, 返回Object.class.否则返回泛参数型类型
-	 * 
 	 * <pre>
-	 * 例如
-	 * public UserDao extends HibernateDao<User,Long>
+	 * 通过反射, 获得Class定义中声明的泛型参数的类型, 注意泛型必须定义在父类处
+	 * 如无法找到, 返回Object.class.
+	 * eg.
+	 * public UserDao extends HibernateDao<User>
 	 * </pre>
-	 * 
-	 * @param targetClass
-	 *            要反射的目标对象Class
-	 * @param index
-	 *            反省参数的位置
-	 * 
-	 * @return class
+	 * @param clazz The class to introspect
+	 * @return the first generic declaration, or Object.class if cannot be determined
 	 */
-	public static Class getSuperClassGenricType(final Class targetClass,
-			final int index) {
+	public static <T> Class<T> getClassGenricType(final Class clazz) {
+		return getClassGenricType(clazz, 0);
+	}
+	
+	
+	/**
+	 * <pre>
+	 * 通过反射, 获得Class定义中声明的父类的泛型参数的类型.
+	 * 如无法找到, 返回Object.class.
+	 * 
+	 * 如public UserDao extends HibernateDao<User,Long>
+	 * </pre>
+	 * @param clazz clazz The class to introspect
+	 * @param index the Index of the generic ddeclaration,start from 0.
+	 * @return the index generic declaration, or Object.class if cannot be determined
+	 */
+	public static Class getClassGenricType(final Class clazz, final int index) {
 
-		Assert.notNull(targetClass, "targetClass不能为空");
-
-		Type genType = targetClass.getGenericSuperclass();
+		Type genType = clazz.getGenericSuperclass();
 
 		if (!(genType instanceof ParameterizedType)) {
-			logger.warn(targetClass.getSimpleName()
-					+ "'s superclass not ParameterizedType");
+			logger.warn(clazz.getSimpleName() + "'s superclass not ParameterizedType");
 			return Object.class;
 		}
 
 		Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
-		if (index >= params.length || index < 0) {
-			logger.warn("Index: " + index + ", Size of "
-					+ targetClass.getSimpleName() + "'s Parameterized Type: "
+		if ((index >= params.length) || (index < 0)) {
+			logger.warn("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
 					+ params.length);
 			return Object.class;
 		}
 		if (!(params[index] instanceof Class)) {
-			logger.warn(targetClass.getSimpleName()
-					+ " not set the actual Class targetClassn superclass generic parameter");
+			logger.warn(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
 			return Object.class;
 		}
 
 		return (Class) params[index];
 	}
+
 
 	/**
 	 * 通过Class创建对象

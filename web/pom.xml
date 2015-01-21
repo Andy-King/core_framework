@@ -4,15 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.lefeng.core.framework</groupId>
-        <artifactId>core-framework</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>org.jee.framework.core</groupId>
+        <artifactId>framework</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     
-    <artifactId>core-framework-web</artifactId>
+    <artifactId>framework-web</artifactId>
     <packaging>war</packaging>
-    <name>AppFuse Modular Application - Web (Spring MVC)</name>
+    <name>JEE Modular Application - Web (Spring MVC)</name>
 
     <build>
         <plugins>
@@ -153,8 +153,8 @@
     <dependencies>
         <dependency>
             <groupId>${project.parent.groupId}</groupId>
-            <artifactId>core-framework-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>framework-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
@@ -189,6 +189,7 @@
             <version>${servlet.version}</version>
             <scope>provided</scope>
         </dependency>
+		<!--
         <dependency>
             <groupId>org.springmodules</groupId>
             <artifactId>spring-modules-validation</artifactId>
@@ -204,6 +205,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+		-->
         <!-- Add Bootstrap via WebJars -->
         <dependency>
             <groupId>org.webjars</groupId>

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Properties;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.base.Objects;
 
 
@@ -122,7 +123,122 @@ public abstract class CollectionUtils extends org.apache.commons.collections.Col
 	public static <T> String extractToString(Collection<T> collection, String propertyName, String separator) {
 		return StringUtils.join(extractToList(collection, propertyName), separator);
 	}
-	
+
+
+	/**
+	 * 转换Collection所有元素(通过toString())为String, 中间以 separator分隔。
+	 * @param <T>
+	 */
+	public static <T> String convertToString(final Collection<T> collection, final String separator) {
+		return StringUtils.join(collection, separator);
+	}
+
+	/**
+	 * 转换Collection所有元素(通过toString())为String, 每个元素的前面加入prefix，后面加入postfix，如<div>mymessage</div>。
+	 * @param <T>
+	 */
+	public static <T> String convertToString(final Collection<T> collection, final String prefix, final String postfix) {
+		StringBuilder builder = new StringBuilder();
+		for (Object o : collection) {
+			builder.append(prefix).append(o).append(postfix);
+		}
+		return builder.toString();
+	}
+
+	/**
+	 * 判断是否为空.
+	 * @param <T>
+	 */
+	public static <T> boolean isEmpty(Collection<T> collection) {
+		return (collection == null) || collection.isEmpty();
+	}
+
+	/**
+	 * 判断是否为空.
+	 * @param <T>
+	 * @param <E>
+	 */
+	public static <T, E> boolean isEmpty(Map<T, E> map) {
+		return (map == null) || map.isEmpty();
+	}
+
+	/**
+	 * 判断是否为空.
+	 * @param <T>
+	 */
+	public static <T> boolean isNotEmpty(Collection<T> collection) {
+		return (collection != null) && !(collection.isEmpty());
+	}
+
+	/**
+	 * 取得Collection的第一个元素，如果collection为空返回null.
+	 */
+	public static <T> T getFirst(Collection<T> collection) {
+		if (isEmpty(collection)) {
+			return null;
+		}
+
+		return collection.iterator().next();
+	}
+
+	/**
+	 * 获取Collection的最后一个元素 ，如果collection为空返回null.
+	 */
+	public static <T> T getLast(Collection<T> collection) {
+		if (isEmpty(collection)) {
+			return null;
+		}
+
+		// 当类型为List时，直接取得最后一个元素 。
+		if (collection instanceof List<?>) {
+			List<T> list = (List<T>) collection;
+			return list.get(list.size() - 1);
+		}
+
+		// 其他类型通过iterator滚动到最后一个元素.
+		Iterator<T> iterator = collection.iterator();
+		while (true) {
+			T current = iterator.next();
+			if (!iterator.hasNext()) {
+				return current;
+			}
+		}
+	}
+
+	/**
+	 * 返回a+b的新List.
+	 */
+	public static <T> List<T> union(final Collection<T> a, final Collection<T> b) {
+		List<T> result = new ArrayList<T>(a);
+		result.addAll(b);
+		return result;
+	}
+
+	/**
+	 * 返回a-b的新List.
+	 */
+	public static <T> List<T> subtract(final Collection<T> a, final Collection<T> b) {
+		List<T> list = new ArrayList<T>(a);
+		for (T element : b) {
+			list.remove(element);
+		}
+
+		return list;
+	}
+
+	/**
+	 * 返回a与b的交集的新List.
+	 */
+	public static <T> List<T> intersection(Collection<T> a, Collection<T> b) {
+		List<T> list = new ArrayList<T>();
+
+		for (T element : a) {
+			if (b.contains(element)) {
+				list.add(element);
+			}
+		}
+		return list;
+	}	
 
 	/**
 	 * Convert the supplied array into a List. A primitive array gets

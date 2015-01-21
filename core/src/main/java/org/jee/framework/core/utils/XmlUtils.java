@@ -22,7 +22,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
  * @author Administrator
  * 
  */
-public class XmlUtils {
+public abstract class XmlUtils {
 	
 	/**
 	 * 将POJO 转化为 XML字符串

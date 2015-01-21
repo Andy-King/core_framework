@@ -53,7 +53,7 @@ public final class RequestSignUtils {
     	//String prestr = createLinkString(sArray);
         //把拼接后的字符串再与安全校验码直接连接起来
         //prestr = prestr + salt;
-        final String mysign = EncryptUtils.md5(createLinkString(sArray).append(salt).toString(), "UTF-8");
+        final String mysign = DigestUtils.md5(createLinkString(sArray).append(salt).toString(), "UTF-8");
         return mysign;
     }
     /** 

@@ -35,18 +35,18 @@ import java.security.NoSuchAlgorithmException;
  * <p>
  * invoke demo:
  * <ul>
- *   <li>System.out.println(md5("abc"));</li>
- *   <li>System.out.println(digest2Hex("abc", DigestAlgorithm.md5));</li>
- *   <li>System.out.println(sha_1("abc"));</li>
- *   <li>System.out.println(digest2Hex("abc", DigestAlgorithm.sha_1));</li>
- *   <li>System.out.println(sha_256("abc"));</li>
- *   <li>System.out.println(digest2Hex("abc", DigestAlgorithm.sha_256));</li>
+ *   <li>System.out.println(DigestUtils.md5("abc"));</li>
+ *   <li>System.out.println(DigestUtils.digest2Hex("abc", DigestAlgorithm.md5));</li>
+ *   <li>System.out.println(DigestUtils.sha_1("abc"));</li>
+ *   <li>System.out.println(DigestUtils.digest2Hex("abc", DigestAlgorithm.sha_1));</li>
+ *   <li>System.out.println(DigestUtils.sha_256("abc"));</li>
+ *   <li>System.out.println(DigestUtils.digest2Hex("abc", DigestAlgorithm.sha_256));</li>
  * </ul>
  * 
  * @author AK
  * @see EncoderUtils
  */
-public abstract class EncryptUtils {
+public abstract class DigestUtils {
 	
 	/**
 	 * <pre>

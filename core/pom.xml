@@ -3,15 +3,15 @@
 
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.lefeng.core.framework</groupId>
-        <artifactId>core-framework</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>org.jee.framework.core</groupId>
+        <artifactId>framework</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 	
-    <artifactId>core-framework-core</artifactId>
+    <artifactId>framework-core</artifactId>
     <packaging>jar</packaging>
-    <name>Service Modular Application - Core</name>
+    <name>JEE framework core</name>
     
     <dependencies>
         <dependency>
@@ -285,6 +285,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+		
     </dependencies>
 	
     <build>
@@ -443,5 +444,5 @@
             </properties>
         </profile>
 
-    </profiles>    
+    </profiles>
 </project>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-  <name>core-framework-core</name>
+  <name>framework-core</name>
   <comment>jee-framework说明：
 		1.采用Java6编译，请注意，此版本之后请使用Java6；
 		2.Page类增加防注入；

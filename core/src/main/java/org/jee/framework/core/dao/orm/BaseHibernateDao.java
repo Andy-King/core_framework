@@ -73,7 +73,7 @@ public class BaseHibernateDao<T, PK extends Serializable> {
 	 * </pre>
 	 */
 	public BaseHibernateDao() {
-		this.entityClass = ReflectionUtils.getSuperClassGenricType(getClass());
+		this.entityClass = ReflectionUtils.getClassGenricType(getClass());
 	}
 	
 	/**
