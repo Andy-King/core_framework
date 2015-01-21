@@ -1,38 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-	 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-	  http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-2.5.xsd 
-	  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
-	  http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
-	default-autowire="byName"  default-lazy-init="true">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd" default-lazy-init="false">
+	<description>Spring 公共配置文件
+	<![CDATA[
 	
 	<!-- 定义受环境影响易变的变量 -->
+	<!-- style 1: -->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
         <property name="ignoreResourceNotFound" value="true" />
+        <property name="fileEncoding" value="UTF-8" />
         <property name="locations">
             <list>
-                <!-- /conf/*properties 配置文件 -->
-                <value>classpath*:/conf/*.properties</value> 
+                <!-- 
+                /conf/profile/develop.properties
+                /conf/profile/test.properties
+                /conf/profile/production.properties
+                 -->
+                <value>classpath:/conf/profile/develop.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- style 2: -->
+    <context:property-placeholder location="classpath*:/conf/profile/develop.properties" order="0"/>
+	]]>
+	</description>
+	
+    <!-- 定义受环境影响易变的变量 -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+        <property name="ignoreResourceNotFound" value="true" />
+        <property name="fileEncoding" value="UTF-8" />
+        <property name="locations">
+            <list>
+                <!-- 
+                /conf/profile/develop.properties
+				/conf/profile/production.properties
+				/conf/profile/test.properties
+                 -->
+                <value>classpath:/conf/profile/develop.properties</value>
             </list>
         </property>
     </bean>
     
     <!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired、@Resource的属性被注入 -->
-    <context:component-scan base-package="com.lafaso">
+    <!-- 扫描注解Bean -->
+    <context:component-scan base-package="org.jee">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     
 	<!-- 注:此bean必须设置 lazy-init="false"-->
-	<bean class="com.lafaso.util.SpringUtils" lazy-init="false"/>
+	<bean class="org.jee.framework.core.utils.SpringUtils" lazy-init="false"/>
+    
+    <!-- 开启AOP监听 只对当前配置文件有效 -->
+    <!-- 
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+     -->
 	
     <!-- 
-    /core-framework-core/src/main/resources/spring/dev
-	/core-framework-core/src/main/resources/spring/test
-	/core-framework-core/src/main/resources/spring/x-product
+	/spring/applicationContext-hibernate.xml
+	/spring/applicationContext-dataSource.xml
+	/spring/applicationContext-ehcache.xml
+	/spring/applicationContext-mail.xml
+	/spring/applicationContext-memcache.xml
+	/spring/applicationContext-redis.xml
+	/spring/applicationContext-shiro.xml
+	/spring/applicationContext-task.xml
+	/spring/applicationContext-zookeeper.xml
      -->
-    <import resource="dev/applicationContext-profile-resoruce.xml"/>
+    <import resource="applicationContext-dataSource.xml"/>
+    <import resource="applicationContext-orm.xml"/>
+    <import resource="applicationContext-ehcache.xml"/>
+    <import resource="applicationContext-mail.xml"/>
+    <import resource="applicationContext-memcache.xml"/>
+    <import resource="applicationContext-redis.xml"/>
+    <import resource="applicationContext-shiro.xml"/>
+    <import resource="applicationContext-task.xml"/>
+    <import resource="applicationContext-zookeeper.xml"/>
 </beans>

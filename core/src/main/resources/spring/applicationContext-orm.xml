@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:cache="http://www.springframework.org/schema/cache" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd 
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context.xsd 
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop.xsd 
+    http://www.springframework.org/schema/jdbc 
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd 
+    http://www.springframework.org/schema/cache 
+    http://www.springframework.org/schema/cache/spring-cache.xsd " default-lazy-init="true" >
+
+    <description>Spring orm配置 </description>
+    
+    <!-- 定义aop Aspect自动代理 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    
+    <!-- 配置SessionFactory,整合Hibernate -->
+    <bean id="sessionFactory"
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 
+        <property name="namingStrategy">
+            <bean class="com.lefeng.pop.framework.utils.LocalNamingStrategy">
+                <property name="addUnderScores" value="true" />
+            </bean>
+        </property>
+         -->
+        <property name="packagesToScan">
+            <list>
+                <value>org.jee.*</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">
+                    ${hibernate.dialect}
+                </prop>
+                <!-- 设置容器启动对数据库是刷新还是检查变更，正是上线需要注释 <prop key="hibernate.hbm2ddl.auto"> 
+                    ${hibernate.hbm2ddl.auto} </prop> -->
+                <prop key="hibernate.show_sql">
+                    ${hibernate.show_sql}
+                </prop>
+                <prop key="hibernate.format_sql">
+                    ${hibernate.format_sql}
+                </prop>
+                <!-- 启用二级缓存 -->
+                <prop key="hibernate.cache.use_second_level_cache">
+                    ${hibernate.cache.use_second_level_cache}
+                </prop>
+                <!-- 二级缓存使用 -->
+                <prop key="hibernate.cache.provider_class">
+                    ${hibernate.cache.provider_class}
+                </prop>
+                <!-- 启用查询缓存 -->
+                <prop key="hibernate.cache.use_query_cache">
+                    ${hibernate.cache.use_query_cache}
+                </prop>
+                <!-- <prop key="hibernate.memcached.servers"> ${hibernate.memcached.servers} 
+                    </prop> -->
+                <prop key="hibernate.fetch_size">
+                    ${hibernate.fetch_size}
+                </prop>
+                <prop key="hibernate.batch_size">
+                    ${hibernate.batch_size}
+                </prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="transactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="dataSource" ref="dataSourceProxy" />
+        <!--
+        <property name="globalRollbackOnParticipationFailure" value="false"/>
+        -->
+    </bean>
+
+    <!-- 配置声明式事务 -->
+    <aop:config>
+        <aop:pointcut id="baseServiceMethods"
+            expression="execution(* org.jee.framework.core.service..*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="baseServiceMethods" />
+    </aop:config>
+
+    <!-- 配置事务的传播特性 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="query*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="load*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="is*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="list*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="count*" propagation="SUPPORTS" read-only="true" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="del*" propagation="REQUIRED" />
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="modify*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="edit*" propagation="REQUIRED" />
+            <tx:method name="batch*" propagation="REQUIRED" />
+            <tx:method name="merge*" propagation="REQUIRED" />
+            <tx:method name="persist*" propagation="REQUIRED" />
+            <tx:method name="assign*" propagation="REQUIRED" />
+            <tx:method name="complete*" propagation="REQUIRED" />
+            <tx:method name="execute*" propagation="REQUIRED" />
+            <tx:method name="create*" propagation="REQUIRED" />
+            <tx:method name="commit*" propagation="REQUIRED" />
+            <tx:method name="roll*" propagation="REQUIRED" />
+            <tx:method name="close*" propagation="REQUIRED" />
+            <tx:method name="comfirm*" propagation="REQUIRED" />
+            <tx:method name="auto*" propagation="REQUIRED" />
+            <tx:method name="publish*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- DAO使用hibernateTemplate进行数据库访问操作 -->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSourceProxy" />
+    </bean>    
+
+</beans>

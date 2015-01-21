@@ -1,6 +1,9 @@
 package org.jee.framework.core.utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
@@ -12,6 +15,39 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class CloneUtils {
+	
+	/**
+	 * clone object method
+	 * @param <T>
+	 * @param obj
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T extends Serializable> T clone(T obj){
+		T cloneObj=null;
+		
+		ByteArrayOutputStream baos;
+		ByteArrayInputStream bais;
+		ObjectOutputStream oos = null;
+		ObjectInputStream ois = null;
+		try{
+			baos = new ByteArrayOutputStream();
+			oos = new ObjectOutputStream(baos);
+			oos.writeObject(obj);
+			bais = new ByteArrayInputStream(baos.toByteArray());
+			ois = new ObjectInputStream(bais);
+			cloneObj=(T)ois.readObject();
+		}catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally{
+			if(null != oos)	try {oos.close();}catch(IOException e){/*ignore exception*/}
+			if(null != ois)	try {ois.close();}catch(IOException e){/*ignore exception*/}
+		}
+		
+		return cloneObj;
+	}
 	
 	public static int size(Object object){
 		int result = -1;

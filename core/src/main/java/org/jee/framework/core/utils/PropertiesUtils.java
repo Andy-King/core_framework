@@ -2,57 +2,186 @@ package org.jee.framework.core.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Enumeration;
 import java.util.Properties;
 
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.EncodedResource;
+import org.springframework.util.Assert;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.DefaultPropertiesPersister;
 import org.springframework.util.PropertiesPersister;
+import org.springframework.util.ResourceUtils;
 
 /**
  * Properties文件工具类.
  * 
- * @author calvin
+ * @see org.springframework.core.io.support.PropertiesLoaderUtils;
+ * @author AK
  */
 public abstract class PropertiesUtils {
 
-	private static final String DEFAULT_ENCODING = "UTF-8";
+	private static final String XML_FILE_EXTENSION = ".xml";
 
-	private final static Logger LOG = LoggerFactory.getLogger(PropertiesUtils.class);
-
-	private static PropertiesPersister propertiesPersister = new DefaultPropertiesPersister();
-	private static ResourceLoader resourceLoader = new DefaultResourceLoader();
 
 	/**
-	 * 载入多个properties文件, 相同的属性在最后载入的文件中的值将会覆盖之前的载入.
-	 * 文件路径使用Spring Resource格式, 文件编码使用UTF-8.
-	 * 
-	 * @param resourcesPaths Spring Resource path
+	 * Load properties from the given EncodedResource,
+	 * potentially defining a specific encoding for the properties file.
+	 * @see #fillProperties(java.util.Properties, EncodedResource)
 	 */
-	public static Properties loadProperties(String... resourcesPaths) {
+	public static Properties loadProperties(EncodedResource resource) throws IOException {
 		Properties props = new Properties();
+		fillProperties(props, resource);
+		return props;
+	}
 
-		for (String location : resourcesPaths) {
+	/**
+	 * Fill the given properties from the given EncodedResource,
+	 * potentially defining a specific encoding for the properties file.
+	 * @param props the Properties instance to load into
+	 * @param resource the resource to load from
+	 * @throws IOException in case of I/O errors
+	 */
+	public static void fillProperties(Properties props, EncodedResource resource)
+			throws IOException {
 
-			LOG.debug("Loading properties file from:" + location);
+		fillProperties(props, resource, new DefaultPropertiesPersister());
+	}
 
-			InputStream is = null;
+	/**
+	 * Actually load properties from the given EncodedResource into the given Properties instance.
+	 * @param props the Properties instance to load into
+	 * @param resource the resource to load from
+	 * @param persister the PropertiesPersister to use
+	 * @throws IOException in case of I/O errors
+	 */
+	static void fillProperties(Properties props, EncodedResource resource, PropertiesPersister persister)
+			throws IOException {
+
+		InputStream stream = null;
+		Reader reader = null;
+		try {
+			String filename = resource.getResource().getFilename();
+			if (filename != null && filename.endsWith(XML_FILE_EXTENSION)) {
+				stream = resource.getInputStream();
+				persister.loadFromXml(props, stream);
+			}
+			else if (resource.requiresReader()) {
+				reader = resource.getReader();
+				persister.load(props, reader);
+			}
+			else {
+				stream = resource.getInputStream();
+				persister.load(props, stream);
+			}
+		}
+		finally {
+			if (stream != null) {
+				stream.close();
+			}
+			if (reader != null) {
+				reader.close();
+			}
+		}
+	}
+
+	/**
+	 * Load properties from the given resource (in ISO-8859-1 encoding).
+	 * @param resource the resource to load from
+	 * @return the populated Properties instance
+	 * @throws IOException if loading failed
+	 * @see #fillProperties(java.util.Properties, Resource)
+	 */
+	public static Properties loadProperties(Resource resource) throws IOException {
+		Properties props = new Properties();
+		fillProperties(props, resource);
+		return props;
+	}
+
+	/**
+	 * Fill the given properties from the given resource (in ISO-8859-1 encoding).
+	 * @param props the Properties instance to fill
+	 * @param resource the resource to load from
+	 * @throws IOException if loading failed
+	 */
+	public static void fillProperties(Properties props, Resource resource) throws IOException {
+		InputStream is = resource.getInputStream();
+		try {
+			String filename = resource.getFilename();
+			if (filename != null && filename.endsWith(XML_FILE_EXTENSION)) {
+				props.loadFromXML(is);
+			}
+			else {
+				props.load(is);
+			}
+		}
+		finally {
+			is.close();
+		}
+	}
+
+	/**
+	 * Load all properties from the specified class path resource
+	 * (in ISO-8859-1 encoding), using the default class loader.
+	 * <p>Merges properties if more than one resource of the same name
+	 * found in the class path.
+	 * @param resourceName the name of the class path resource
+	 * @return the populated Properties instance
+	 * @throws IOException if loading failed
+	 */
+	public static Properties loadAllProperties(String resourceName) throws IOException {
+		return loadAllProperties(resourceName, null);
+	}
+
+	/**
+	 * Load all properties from the specified class path resource
+	 * (in ISO-8859-1 encoding), using the given class loader.
+	 * <p>Merges properties if more than one resource of the same name
+	 * found in the class path.
+	 * @param resourceName the name of the class path resource
+	 * @param classLoader the ClassLoader to use for loading
+	 * (or {@code null} to use the default class loader)
+	 * @return the populated Properties instance
+	 * @throws IOException if loading failed
+	 */
+	public static Properties loadAllProperties(String resourceName, ClassLoader classLoader) throws IOException {
+		Assert.notNull(resourceName, "Resource name must not be null");
+		ClassLoader classLoaderToUse = classLoader;
+		if (classLoaderToUse == null) {
+			classLoaderToUse = ClassUtils.getDefaultClassLoader();
+		}
+		Enumeration<URL> urls = (classLoaderToUse != null ? classLoaderToUse.getResources(resourceName) :
+				ClassLoader.getSystemResources(resourceName));
+		Properties props = new Properties();
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+			URLConnection con = url.openConnection();
+			ResourceUtils.useCachesIfNecessary(con);
+			InputStream is = con.getInputStream();
 			try {
-				Resource resource = resourceLoader.getResource(location);
-				is = resource.getInputStream();
-				propertiesPersister.load(props, new InputStreamReader(is, DEFAULT_ENCODING));
-			} catch (IOException ex) {
-				LOG.info("Could not load properties from classpath:" + location + ": " + ex.getMessage());
-			} finally {
-				IOUtils.closeQuietly(is);
+				if (resourceName != null && resourceName.endsWith(XML_FILE_EXTENSION)) {
+					props.loadFromXML(is);
+				}
+				else {
+					props.load(is);
+				}
+			}
+			finally {
+				is.close();
 			}
 		}
 		return props;
+	}
+	
+	
+	public String getPropertiesValue(String pathAndFileName, String key) throws IOException{
+		org.springframework.core.io.Resource resource = new ClassPathResource(pathAndFileName);
+        Properties props = loadProperties(resource);
+		return props.getProperty(key);
 	}
 }
 

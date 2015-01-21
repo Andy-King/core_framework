@@ -41,7 +41,9 @@
 	    
 		<!-- 每天生成一个日志文件，保存31天的日志文件。 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+		    <!-- log.dir 在maven profile里配置 @see https://github.com/zhangkaitao/es/blob/master/web/src/main/resources/logback.xml-->
 			<FileNamePattern>${logbase}%d{yyyy-MM-dd}.log</FileNamePattern>
+            <!-- 日志最大的历史 60天 -->
 			<!-- 
 			<MaxHistory>31</MaxHistory>
 			 -->
@@ -100,8 +102,8 @@
 		<To>wangkuangwei@novel-supertv.com</To> 
 		<From>zhouhuichun@novel-supertv.com</From>
 		<Subject>DataService-Error-LogMessage: %logger{20} - %m</Subject>
-		<username>zhouhuichun@novel-supertv.com</username>
-		<password>zhc982?</password>
+		<username>2121@163.com</username>
+		<password>test</password>
 	 
 		<asynchronousSending>true</asynchronousSending>
 		

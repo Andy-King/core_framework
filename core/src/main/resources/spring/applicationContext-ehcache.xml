@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-lazy-init="true">
+
+    <description>Spring ehcache 缓存</description>
+    
+    <!-- spring对ehcache的缓存工厂支持 -->
+    <bean id="ehCacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation" value="classpath:/conf/ehcache/ehcache.xml" />
+        <property name="acceptExisting" value="true" />
+    </bean>
+    
+    <!-- spring对ehcache的缓存管理 -->
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+        <property name="cacheManager" ref="ehCacheManagerFactory"></property>
+    </bean>
+    
+    <!-- 使用缓存annotation 配置 -->
+    <!-- 
+    <cache:annotation-driven cache-manager="ehCacheManager" proxy-target-class="true" />
+     -->
+
+</beans>
