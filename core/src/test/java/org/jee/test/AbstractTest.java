@@ -18,9 +18,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
             <property name="locations">
                 <list>
                     <!-- 
-                    /conf/profile/development.properties
-                    /conf/profile/test.properties
-                    /conf/profile/production.properties
+                    /conf/profile/development.properties -- 开发环境
+                    /conf/profile/test.properties        -- 测式环境
+                    /conf/profile/production.properties  -- 生活环境
                      -->
                     <value>classpath:/conf/profile/development.properties</value>
                 </list>
