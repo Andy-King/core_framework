@@ -23,7 +23,7 @@
         <property name="locations">
             <list>
                 <!-- 
-                /conf/profile/develop.properties
+                /conf/profile/development.properties
                 /conf/profile/test.properties
                 /conf/profile/production.properties
                  -->
@@ -45,11 +45,11 @@
         <property name="locations">
             <list>
                 <!-- 
-                /conf/profile/develop.properties
+                /conf/profile/development.properties
 				/conf/profile/production.properties
 				/conf/profile/test.properties
                  -->
-                <value>classpath:/conf/profile/develop.properties</value>
+                <value>classpath:/conf/profile/development.properties</value>
             </list>
         </property>
     </bean>

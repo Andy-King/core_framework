@@ -342,7 +342,7 @@
 	<!-- profiles -->
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>development</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>

@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @org.springframework.test.context.ContextConfiguration(locations={"classpath:spring/applicationContext.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("develop")
+@ActiveProfiles("development")
 public class AbstractTest{
 
 	@Test

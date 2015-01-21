@@ -58,7 +58,7 @@
 
 
     <!-- 开发环境使用的dataSource和配置文件 -->
-    <beans profile="dev">
+    <beans profile="development">
     
         <!-- 定义受环境影响易变的变量 -->
         <context:property-placeholder ignore-resource-not-found="true" location="classpath*:conf/profile/develop.properties"  />
