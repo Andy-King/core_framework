@@ -87,3 +87,5 @@ JEE CRUD Framework Archetype
 *  connection.admin.url
 *  connection.username
 *  connection.password
+
+##POWER BY X-TEAMS
