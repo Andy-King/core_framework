@@ -73,6 +73,11 @@
 		<logback.version>1.1.1</logback.version>
         <cxf.version>2.7.10</cxf.version>
 
+		<!-- RPC service -->
+		<zookeeper.version>3.4.5</zookeeper.version>
+		<dubbo.version>2.5.3</dubbo.version>
+		<zkclient.version>0.1</zkclient.version>
+		
 		<!-- JEE Web libs -->
 		<!--<servlet.version>3.1.0</servlet.version>-->
 		<servlet.version>2.5</servlet.version>
@@ -367,6 +372,64 @@
 			<!-- log end -->
 			<!-- Datasource end  -->
 
+			<!-- RPC service -->
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>${dubbo.version}</version>
+				<scope>compile</scope>
+				<exclusions>
+					<exclusion>
+						<artifactId>spring</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>jedis</artifactId>
+						<groupId>redis.clients</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>zookeeper</artifactId>
+						<groupId>org.apache.zookeeper</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>javassist</artifactId>
+						<groupId>org.javassist</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>hibernate-validator</artifactId>
+						<groupId>org.hibernate</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>httpclient</artifactId>
+						<groupId>org.apache.httpcomponents</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>log4j</artifactId>
+						<groupId>log4j</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>xstream</artifactId>
+						<groupId>com.thoughtworks.xstream</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>fastjson</artifactId>
+						<groupId>com.alibaba</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.github.sgroschupf</groupId>
+				<artifactId>zkclient</artifactId>
+				<version>${zkclient.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			
 			<!-- j2ee web spec -->
 		   	<dependency>
 			   <groupId>javax.el</groupId>

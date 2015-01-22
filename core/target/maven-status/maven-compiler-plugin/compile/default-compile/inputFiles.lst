@@ -7,6 +7,7 @@ D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\Spr
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\service\impl\AbstractBaseService.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\rw\database\MultiDataSourceMapHolder.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\BeanValidatorUtils.java
+D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\interceptor\OrmInsertInterceptor.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\CollectionUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\IBaseJDBC.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\exception\NestRuntimeException.java
@@ -21,11 +22,15 @@ D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\Web
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\exception\AssertException.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\exception\ValidationException.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\exception\AbstractException.java
+D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\interceptor\OrmSaveInterceptor.java
+D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\AopProxyUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\orm\HibernateDao.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\RequestSignUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\io\Files.java
+D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\interceptor\OrmDeleteInterceptor.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\BitMap.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\rw\database\DynamicDataSourceSwitch.java
+D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\orm\RestrictionNames.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\ReflectionUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\impl\AbstractRepository.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\DateUtils.java
@@ -36,6 +41,7 @@ D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\orm\B
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\common\bundle\BeanResourceBundle.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\exception\AuthException.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\ArithUtils.java
+D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\PrettyMemoryUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\ClassUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\ConvertUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\CaptchaUtils.java
@@ -61,7 +67,9 @@ D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\Com
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\IBaseEntity.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\StringUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\orm\PropertyFilter.java
+D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\orm\PropertyFilters.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\orm\SearchFilter.java
+D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\dao\interceptor\OrmUpdateInterceptor.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\service\impl\BaseServiceImpl.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\utils\PropertiesUtils.java
 D:\Workspaces\core-framework\core\src\main\java\org\jee\framework\core\exception\ControllerException.java

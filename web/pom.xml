@@ -189,6 +189,7 @@
             <version>${servlet.version}</version>
             <scope>provided</scope>
         </dependency>
+		
 		<!--
         <dependency>
             <groupId>org.springmodules</groupId>

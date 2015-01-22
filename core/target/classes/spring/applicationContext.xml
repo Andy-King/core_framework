@@ -14,26 +14,26 @@
 	<description>Spring 公共配置文件
 	<![CDATA[
 	
-	<!-- 定义受环境影响易变的变量 -->
-	<!-- style 1: -->
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-        <property name="ignoreResourceNotFound" value="true" />
-        <property name="fileEncoding" value="UTF-8" />
-        <property name="locations">
-            <list>
-                <!-- 
-                /conf/profile/development.properties
-                /conf/profile/test.properties
-                /conf/profile/production.properties
-                 -->
-                <value>classpath:/conf/profile/development.properties</value>
-            </list>
-        </property>
-    </bean>
-    
-    <!-- style 2: -->
-    <context:property-placeholder location="classpath*:/conf/profile/development.properties" order="0"/>
+		<!-- 定义受环境影响易变的变量 -->
+		<!-- style 1: -->
+		<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		    <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		    <property name="ignoreResourceNotFound" value="true" />
+		    <property name="fileEncoding" value="UTF-8" />
+		    <property name="locations">
+		        <list>
+		            <!-- 
+		            /conf/profile/development.properties -- 开发环境
+		            /conf/profile/test.properties        -- 测式环境
+		            /conf/profile/production.properties  -- 生活环境
+		             -->
+		            <value>classpath:/conf/profile/development.properties</value>
+		        </list>
+		    </property>
+		</bean>
+		
+		<!-- style 2: -->
+		<context:property-placeholder location="classpath*:/conf/profile/development.properties" order="0"/>
 	]]>
 	</description>
 	
@@ -69,23 +69,27 @@
      -->
 	
     <!-- 
+    /spring/applicationContext-common.xml
 	/spring/applicationContext-orm.xml
 	/spring/applicationContext-dataSource.xml
+    /spring/applicationContext-dubbo.xml
 	/spring/applicationContext-ehcache.xml
 	/spring/applicationContext-mail.xml
 	/spring/applicationContext-memcache.xml
 	/spring/applicationContext-redis.xml
 	/spring/applicationContext-shiro.xml
-	/spring/applicationContext-task.xml
+	/spring/applicationContext-tasks.xml
 	/spring/applicationContext-zookeeper.xml
      -->
+    <import resource="applicationContext-common.xml"/>
     <import resource="applicationContext-dataSource.xml"/>
     <import resource="applicationContext-orm.xml"/>
+    <import resource="applicationContext-dubbo.xml"/>
     <import resource="applicationContext-ehcache.xml"/>
     <import resource="applicationContext-mail.xml"/>
     <import resource="applicationContext-memcache.xml"/>
     <import resource="applicationContext-redis.xml"/>
     <import resource="applicationContext-shiro.xml"/>
-    <import resource="applicationContext-task.xml"/>
+    <import resource="applicationContext-tasks.xml"/>
     <import resource="applicationContext-zookeeper.xml"/>
 </beans>

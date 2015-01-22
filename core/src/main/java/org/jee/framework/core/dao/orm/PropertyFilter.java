@@ -8,9 +8,28 @@ import org.jee.framework.core.utils.ConvertUtils;
 
 
 /**
- * 与具体的 ORM 实现无关的属性过滤条件封装类, 主要记录页面中简单的搜索过滤条件, 其最大的好处是可以同时提供多个过滤条件.
+ * orm属性过滤器，可以通过{@link PropertyFilters#build(String, String)}创建，使用他创建可以直接
+ * 写入表达式即可，相关表达式样式查看{@link com.github.dactiv.orm.core.hibernate.CriterionBuilder}的实现类,如果直接创建查看{@link com.github.dactiv.orm.core.hibernate.CriterionBuilder}
+ * 实现类的实际restrictionName值和{@link FieldType}枚举值,如果一个属性对比多个值可以使用逗号(,)分割
+ *
+ * <p>
+ * 	例子:
+ * </p>
+ * <code>PropertyFilter filter = new PropertyFilter("EQ",FieldType.S.getValue(),new String[]{"propertyName"},"a,b,c");<code>
+ * <p>当使用以上filter到{@link com.github.dactiv.orm.core.hibernate.support.HibernateSupportDao#findUniqueByPropertyFilter(java.util.List)}是会产生以下sql</p>
+ * <p>sql:selete * from table where propertyName = 'a' and propertyName = 'b' and propertyName = 'c'</p>
+ *
+ * <code>PropertyFilter filter = new PropertyFilter("EQ",FieldType.S.getValue(),new String[]{"propertyName1","propertyName2"},"a");<code>
+ * <p>当使用以上filter到{@link  com.github.dactiv.orm.core.hibernate.support.HibernateSupportDao#findUniqueByPropertyFilter(java.util.List)}是会产生以下sql</p>
+ * <p>sql:selete * from table where propertyName1 = 'a' or propertyName2 = 'a'</p>
+ *
+ * <code>PropertyFilter filter = new PropertyFilter("EQ",FieldType.S.getValue(),new String[]{"propertyName1","propertyName2"},"a,b");<code>
+ * <p>当使用以上filter到{@link  com.github.dactiv.orm.core.hibernate.support.HibernateSupportDao#findUniqueByPropertyFilter(java.util.List)}是会产生以下sql</p>
+ * <p>sql:selete * from table where (propertyName1 = 'a' or propertyName1 = 'b') and (propertyName2 = 'a' or propertyName2 = 'b')</p>
  * 
- * @author zhouych
+ * @see PropertyFilters#build(String, String)
+ * @see com.github.dactiv.orm.core.hibernate.CriterionBuilder
+ * 
  */
 public class PropertyFilter {
 
@@ -55,7 +74,11 @@ public class PropertyFilter {
 			return clazz;
 		}
 	}
+	//约束名称
+	private String restrictionName;
 	
+	//属性类型
+	private Class<?> propertyType;
 	/**
 	 * 比较类型
 	 */
@@ -112,6 +135,42 @@ public class PropertyFilter {
 		this.matchValue = ConvertUtils.convertStringToObject(value, this.propertyClass);
 	}
 	
+
+	/**
+	 * 构造方法，可以通过{@link PropertyFilters#build(String, String)}创建，使用他创建可以直接
+	 * 写入表达式即可，相关表达式样式查看{@link com.github.dactiv.orm.core.hibernate.CriterionBuilder}的实现类,如果直接创建查看{@link com.github.dactiv.orm.core.hibernate.CriterionBuilder}
+	 * 实现类的实际restrictionName值和{@link FieldType}枚举值,如果一个属性对比多个值可以使用逗号(,)分割
+	 * 
+	 * <p>
+	 * 	例子:
+	 * </p>
+	 * <code>PropertyFilter filter = new PropertyFilter("EQ",FieldType.S.getValue(),new String[]{"propertyName"},"a,b,c");<code> 
+	 * <p>当使用以上filter到{@link com.github.dactiv.orm.core.hibernate.support.HibernateSupportDao#findUniqueByPropertyFilter(java.util.List)}是会产生以下sql</p>
+	 * <p>sql:selete * from table where propertyName = 'a' and propertyName = 'b' and propertyName = 'c'</p>
+	 * 
+	 * <code>PropertyFilter filter = new PropertyFilter("EQ",FieldType.S.getValue(),new String[]{"propertyName1","propertyName2"},"a");<code> 
+	 * <p>当使用以上filter到{@link  com.github.dactiv.orm.core.hibernate.support.HibernateSupportDao#findUniqueByPropertyFilter(java.util.List)}是会产生以下sql</p>
+	 * <p>sql:selete * from table where propertyName1 = 'a' or propertyName2 = 'a'</p>
+	 * 
+	 * <code>PropertyFilter filter = new PropertyFilter("EQ",FieldType.S.getValue(),new String[]{"propertyName1","propertyName2"},"a,b");<code> 
+	 * <p>当使用以上filter到{@link  com.github.dactiv.orm.core.hibernate.support.HibernateSupportDao#findUniqueByPropertyFilter(java.util.List)}是会产生以下sql</p>
+	 * <p>sql:selete * from table where (propertyName1 = 'a' or propertyName1 = 'b') and (propertyName2 = 'a' or propertyName2 = 'b')</p>
+	 * 
+	 * @param restrictionName 约束名称
+	 * @param FieldType 属性类型
+	 * @param propertyNames 属性名称
+	 * @param matchValue 对比值
+	 */
+	public PropertyFilter(String restrictionsName, PropertyType fieldType,
+			String[] propertyNames, String matchValue) {
+		this.setRestrictionName(restrictionsName);
+		this.propertyType = fieldType.getValue();
+		this.propertyNames = propertyNames;
+		this.matchValue = matchValue;
+	}
+
+
+
 	/**
 	 * 获取唯一的比较属性名称.
 	 * 
@@ -148,5 +207,29 @@ public class PropertyFilter {
 
 	public String[] getPropertyNames() {
 		return propertyNames;
+	}
+
+
+
+	public void setRestrictionName(String restrictionName) {
+		this.restrictionName = restrictionName;
+	}
+
+
+
+	public String getRestrictionName() {
+		return restrictionName;
+	}
+
+
+
+	public void setPropertyType(Class<?> propertyType) {
+		this.propertyType = propertyType;
+	}
+
+
+
+	public Class<?> getPropertyType() {
+		return propertyType;
 	}
 }

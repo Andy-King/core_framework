@@ -69,23 +69,27 @@
      -->
 	
     <!-- 
+    /spring/applicationContext-common.xml
 	/spring/applicationContext-orm.xml
 	/spring/applicationContext-dataSource.xml
+    /spring/applicationContext-dubbo.xml
 	/spring/applicationContext-ehcache.xml
 	/spring/applicationContext-mail.xml
 	/spring/applicationContext-memcache.xml
 	/spring/applicationContext-redis.xml
 	/spring/applicationContext-shiro.xml
-	/spring/applicationContext-task.xml
+	/spring/applicationContext-tasks.xml
 	/spring/applicationContext-zookeeper.xml
      -->
+    <import resource="applicationContext-common.xml"/>
     <import resource="applicationContext-dataSource.xml"/>
     <import resource="applicationContext-orm.xml"/>
+    <import resource="applicationContext-dubbo.xml"/>
     <import resource="applicationContext-ehcache.xml"/>
     <import resource="applicationContext-mail.xml"/>
     <import resource="applicationContext-memcache.xml"/>
     <import resource="applicationContext-redis.xml"/>
     <import resource="applicationContext-shiro.xml"/>
-    <import resource="applicationContext-task.xml"/>
+    <import resource="applicationContext-tasks.xml"/>
     <import resource="applicationContext-zookeeper.xml"/>
 </beans>
