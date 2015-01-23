@@ -17,10 +17,10 @@ import org.jee.framework.core.dao.IBaseDao;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 
-@Component("baseDaoImpl")
+@Repository("baseDao")
 public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	
 	// 使用HibernateTemplate

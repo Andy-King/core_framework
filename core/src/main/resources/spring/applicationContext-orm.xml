@@ -25,16 +25,13 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     
     <!-- 配置SessionFactory,整合Hibernate -->
-    <bean id="sessionFactory"
-        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <!-- 
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceProxy" />
         <property name="namingStrategy">
-            <bean class="com.lefeng.pop.framework.utils.LocalNamingStrategy">
-                <property name="addUnderScores" value="true" />
+            <bean class="org.jee.framework.core.dao.orm.cfg.LocalNamingStrategy">
+                <property name="addUnderScores" value="true"/>
             </bean>
         </property>
-         -->
         <property name="packagesToScan">
             <list>
                 <value>org.jee.*</value>

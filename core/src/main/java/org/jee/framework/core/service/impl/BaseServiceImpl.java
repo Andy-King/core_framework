@@ -9,7 +9,7 @@ import org.hibernate.type.Type;
 import org.jee.framework.core.dao.IBaseDao;
 import org.jee.framework.core.service.IBaseService;
 import org.jee.framework.core.utils.StringUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 
 /**
@@ -19,16 +19,13 @@ import org.springframework.stereotype.Component;
  * Description:
  * 基础服务类，默认实现了基础服务接口IBaseService，所有的业务服务类都需要继承此类
  * 
- * Revision History:
- * <who>   <when>   <what>
- * 
  * </pre>
  * 
  * @param <T> the entity
  * @param <PK> the entity's primary key
  * @see IBaseService
  */
-@Component
+@Service
 public abstract class BaseServiceImpl<T, PK extends Serializable> implements IBaseService<T, PK> {
 	
 	/**
