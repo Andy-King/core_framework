@@ -13,10 +13,6 @@ import org.hibernate.type.Type;
  * Description:
  * Service 基础接口，含有基本的CRUD操作，所有业务Service接口都应该继承此接口
  * 
- * 
- * Revision History:
- * <who>   <when>   <what>
- * 
  * </pre>
  * 
  * @param <T> the entity

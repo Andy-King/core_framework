@@ -5,9 +5,26 @@ import org.hibernate.cfg.NamingStrategy;
 import org.hibernate.util.StringHelper;
 
 /**
+ * <pre>
  * 仿造DefaultNamingStrategy实现一个自己的table和column的整体命名策略。
+ * 设置是否转换className与propertyName为分词后加下划线的形式。如：AaaBbb->aaa_bbb;
+ *  aaaBbb->aaa_bbb。
+ *  {@code
+ *  private boolean _addUnderScores = false;
+ *  <!-- 配置SessionFactory,整合Hibernate -->
+ *  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+ *      <property name="dataSource" ref="dataSourceProxy" />
+ *      <property name="namingStrategy">
+ *          <bean class="org.jee.framework.core.dao.orm.cfg.LocalNamingStrategy">
+ *              <property name="addUnderScores" value="true"/>
+ *          </bean>
+ *      </property>
+ *      ...
+ *  </bean>    
+ *  }
+ * </pre>
  * 
- * 
+ * @author AK
  */
 public class LocalNamingStrategy implements NamingStrategy {
 	/**
