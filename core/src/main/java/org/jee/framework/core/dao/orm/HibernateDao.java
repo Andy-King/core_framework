@@ -16,7 +16,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import org.jee.framework.core.dao.orm.PropertyFilter.MatchType;
-import org.jee.framework.core.page.Page;
 
 /**
  * 在 {@link BaseHibernateDao} 的基础上加入了如下特性:
