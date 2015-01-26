@@ -18,17 +18,17 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
             <property name="locations">
                 <list>
                     <!-- 
-                    /conf/profile/development.properties -- 开发环境
-                    /conf/profile/test.properties        -- 测式环境
-                    /conf/profile/production.properties  -- 生活环境
+                    /profile/development.properties -- 开发环境
+                    /profile/test.properties        -- 测式环境
+                    /profile/production.properties  -- 生活环境
                      -->
-                    <value>classpath:/conf/profile/development.properties</value>
+                    <value>classpath:/profile/development.properties</value>
                 </list>
             </property>
         </bean>
         
         <!-- style 2: -->
-        <context:property-placeholder location="classpath*:/conf/profile/development.properties" order="0"/>
+        <context:property-placeholder location="classpath*:/profile/development.properties" order="0"/>
      }
  * </pre>
  * 

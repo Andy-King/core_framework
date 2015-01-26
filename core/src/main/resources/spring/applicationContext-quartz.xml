@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd"
+       default-autowire="byName" default-lazy-init="false">
+    <description>Spring quartz配置:
+        <![CDATA[
+			<!-- quartz配置定时任务调度 -->
+			<bean id="testQuartz" class="org.jee.test.AbstractTest">
+			</bean>
+			
+			<bean id="testQuartzTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+			  <property name="targetObject" ref="testQuartz"/>
+			  <property name="targetMethod" value="test"/>
+			  <property name="concurrent" value="false"/>
+			</bean>
+			
+			<bean id="testQuartzDoTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+			  <property name="jobDetail" ref="testQuartzTask"/>
+			  <property name="cronExpression" value="0 0 3 * * ? *"/>
+			</bean>
+			
+			<!-- 总管理类，如果将lazy-init='false'那么容器启动就会执行调度程序 --> 
+			<bean id="startQuertz" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+			  <property name="triggers"> 
+			    <list> 
+			      <ref bean="testQuartzDoTime"/>
+			    </list>
+			  </property> 
+			</bean>   
+        ]]>
+    </description>
+
+
+</beans>

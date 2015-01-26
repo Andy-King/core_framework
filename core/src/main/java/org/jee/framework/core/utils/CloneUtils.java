@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author AK
+ *
+ */
 public abstract class CloneUtils {
 	
 	/**
@@ -38,9 +42,9 @@ public abstract class CloneUtils {
 			ois = new ObjectInputStream(bais);
 			cloneObj=(T)ois.readObject();
 		}catch (IOException e) {
-			e.printStackTrace();
+			throw ExceptionUtils.unchecked(e);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			throw ExceptionUtils.unchecked(e);
 		}finally{
 			if(null != oos)	try {oos.close();}catch(IOException e){/*ignore exception*/}
 			if(null != ois)	try {ois.close();}catch(IOException e){/*ignore exception*/}

@@ -52,7 +52,7 @@ public class OrmUtils {
 		}
 	}
 
-	private static String getJdbcUrlFromDataSource(DataSource dataSource) {
+	public static String getJdbcUrlFromDataSource(DataSource dataSource) {
 		Connection connection = null;
 		try {
 			connection = dataSource.getConnection();

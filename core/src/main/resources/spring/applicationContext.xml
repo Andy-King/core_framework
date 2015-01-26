@@ -23,17 +23,17 @@
 		    <property name="locations">
 		        <list>
 		            <!-- 
-		            /conf/profile/development.properties -- 开发环境
-		            /conf/profile/test.properties        -- 测式环境
-		            /conf/profile/production.properties  -- 生活环境
+		            /profile/development.properties -- 开发环境
+		            /profile/test.properties        -- 测式环境
+		            /profile/production.properties  -- 生活环境
 		             -->
-		            <value>classpath:/conf/profile/development.properties</value>
+		            <value>classpath:/profile/development.properties</value>
 		        </list>
 		    </property>
 		</bean>
 		
 		<!-- style 2: -->
-		<context:property-placeholder location="classpath*:/conf/profile/development.properties" order="0"/>
+		<context:property-placeholder location="classpath*:/profile/development.properties" order="0"/>
 	]]>
 	</description>
 	
@@ -45,11 +45,11 @@
         <property name="locations">
             <list>
                 <!-- 
-                /conf/profile/development.properties
-				/conf/profile/production.properties
-				/conf/profile/test.properties
+                /profile/development.properties
+				/profile/production.properties
+				/profile/test.properties
                  -->
-                <value>classpath:/conf/profile/development.properties</value>
+                <value>classpath:/profile/development.properties</value>
             </list>
         </property>
     </bean>
@@ -79,6 +79,7 @@
 	/spring/applicationContext-redis.xml
 	/spring/applicationContext-shiro.xml
 	/spring/applicationContext-tasks.xml
+	/spring/applicationContext-quartz.xml
 	/spring/applicationContext-zookeeper.xml
      -->
     <import resource="applicationContext-common.xml"/>
@@ -91,5 +92,6 @@
     <import resource="applicationContext-redis.xml"/>
     <import resource="applicationContext-shiro.xml"/>
     <import resource="applicationContext-tasks.xml"/>
+    <import resource="applicationContext-quartz.xml"/>
     <import resource="applicationContext-zookeeper.xml"/>
 </beans>

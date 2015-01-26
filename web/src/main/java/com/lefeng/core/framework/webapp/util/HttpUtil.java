@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.jee.framework.core.utils.EncoderUtils;
 import org.jee.framework.core.utils.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.PropertyAccessorFactory;
 
 public class HttpUtil {
 
@@ -253,4 +256,12 @@ public class HttpUtil {
     public static String getWebAppURL(HttpServletRequest request) {
         return StringUtils.substringBefore(request.getRequestURL().toString(), request.getRequestURI());
     }
+    
+	public static <T> T request2Bean(HttpServletRequest request, Class<T> beanClass){
+		
+		T obj = BeanUtils.instantiate(beanClass);
+		BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(obj);
+		bw.setPropertyValues(request.getParameterMap());
+		return obj;
+	}
 }

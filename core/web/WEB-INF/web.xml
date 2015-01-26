@@ -46,37 +46,54 @@
     <listener>
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
-    <!--Spring用于log4j初始化的监听器 start-->
-    <listener>
-        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-    </listener>
-    <!-- 加载log4j的配置文件 -->
-    <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>classpath:/conf/log4j.properties</param-value>
-    </context-param>
+    <!-- 
+        [CDATA[
+	    Spring用于log4j初始化的监听器
+	    <listener>
+	        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	    </listener>
+	    <context-param>
+	        <param-name>log4jConfigLocation</param-name>
+	        <param-value>classpath:/conf/log4j.properties</param-value>
+	    </context-param>
+	
+	    <context-param>
+	        <param-name>log4jRefreshInterval</param-name>
+	        <param-value>6000</param-value>
+	    </context-param>
+        ]]
+     -->
 
-    <!--Spring默认刷新Log4j配置文件的间隔,单位为millisecond -->
-    <context-param>
-        <param-name>log4jRefreshInterval</param-name>
-        <param-value>6000</param-value>
-    </context-param>
-    <!--Spring用于log4j初始化的监听器 end -->
+    <!-- Hessian配置 -->
     <servlet>
-        <servlet-name>rmi</servlet-name>
+        <servlet-name>hessian</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring/hessian-servlet.xml</param-value>
+            <param-name>namespace</param-name>
+            <param-value>classes/spring/rmi/hessian-servlet</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>rmi</servlet-name>
-        <url-pattern>/api/remoting/*</url-pattern>
-    </servlet-mapping>
-
+        <servlet-name>hessian</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>    
+    <!-- Hessian end-->
+    
+    <!-- 配置OpenSessionInView过滤器 -->
+    <filter>
+        <filter-name>openSessionInView</filter-name>
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+        <init-param>
+            <param-name>sessionFactoryBeanName</param-name>
+            <param-value>sessionFactory</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>openSessionInView</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
 	<!-- Session超时定义,单位为分钟 -->
 	<session-config>
 		<session-timeout>10</session-timeout>
@@ -87,13 +104,13 @@
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring/springMvc-servlet.xml</param-value>
+            <param-value>classpath:spring/mvc/spring-mvc-servlet.xml</param-value>
         </init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>spring3</servlet-name>
-		<url-pattern>*.action</url-pattern>
+		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
 
 </web-app>
