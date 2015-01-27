@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd" default-lazy-init="true">
+          
+    <description>Spring 公共配置如下:
+       <![CDATA[
+		    package org.jee.framework.web.upload;
+		    
+		    public class FileUploadUtils {
+			    //默认上传的地址
+			    private static String defaultBaseDir = "upload";
+			    
+			    public static void setDefaultBaseDir(String defaultBaseDir) {
+			        FileUploadUtils.defaultBaseDir = defaultBaseDir;
+			    }
+			
+			    public static String getDefaultBaseDir() {
+			        return defaultBaseDir;
+			    }
+		    }
+		    
+		    <!-- 设置默认的文件上传路径 -->
+		    <!--
+		    FactoryBean which returns a value which is the result of a static or instance method invocation. For most use cases it is better to just use the container's built-in factory method support for the same purpose, since that is smarter at converting arguments. This factory bean is still useful though when you need to call a method which doesn't return any value (for example, a static class method to force some sort of initialization to happen). This use case is not supported by factory methods, since a return value is needed to obtain the bean instance. 
+		
+			Note that as it is expected to be used mostly for accessing factory methods, this factory by default operates in a singleton fashion. The first request to getObject by the owning bean factory will cause a method invocation, whose return value will be cached for subsequent requests. An internal singleton property may be set to "false", to cause this factory to invoke the target method each time it is asked for an object. 
+			
+			A static target method may be specified by setting the targetMethod property to a String representing the static method name, with targetClass specifying the Class that the static method is defined on. Alternatively, a target instance method may be specified, by setting the targetObject property as the target object, and the targetMethod property as the name of the method to call on that target object. Arguments for the method invocation may be specified by setting the arguments property. 
+			
+			This class depends on afterPropertiesSet() being called once all properties have been set, as per the InitializingBean contract. 
+			
+			An example (in an XML based bean factory definition) of a bean definition which uses this class to call a static factory method: 
+			
+			 <bean id="myObject" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+			   <property name="staticMethod"><value>com.whatever.MyClassFactory.getInstance</value></property>
+			 </bean>
+			An example of calling a static method then an instance method to get at a Java system property. Somewhat verbose, but it works. 
+			
+			 <bean id="sysProps" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+			   <property name="targetClass"><value>java.lang.System</value></property>
+			   <property name="targetMethod"><value>getProperties</value></property>
+			 </bean>
+			
+			 <bean id="javaVersion" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+			   <property name="targetObject"><ref local="sysProps"/></property>
+			   <property name="targetMethod"><value>getProperty</value></property>
+			   <property name="arguments">
+			     <list>
+			       <value>java.version</value>
+			     </list>
+			   </property>
+			 </bean>
+		    -->
+		    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		        <property name="staticMethod" value="org.jee.framework.web.upload.FileUploadUtils.setDefaultBaseDir"/>
+		        <property name="arguments" value="${file.upload.dir}"/>
+		    </bean>                                                                    
+	    ]]>
+    </description>
+
+
+</beans>

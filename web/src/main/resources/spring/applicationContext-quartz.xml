@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+          http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd" default-lazy-init="false">
+    <description>Spring quartz配置:
+        <![CDATA[
+			<!-- quartz配置定时任务调度 -->
+			<bean id="testQuartz" class="org.jee.test.AbstractTest">
+			</bean>
+			
+			<bean id="testQuartzTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+			  <property name="targetObject" ref="testQuartz"/>
+			  <property name="targetMethod" value="test"/>
+			  <property name="concurrent" value="false"/>
+			</bean>
+			
+			<bean id="testQuartzDoTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+			  <property name="jobDetail" ref="testQuartzTask"/>
+			  <property name="cronExpression" value="0 0 3 * * ? *"/>
+			</bean>
+			
+			<!-- 总管理类，如果将lazy-init='false'那么容器启动就会执行调度程序 --> 
+			<bean id="startQuertz" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"> 
+			  <property name="triggers"> 
+			    <list> 
+			      <ref bean="testQuartzDoTime"/>
+			    </list>
+			  </property> 
+			</bean>   
+        ]]>
+    </description>
+
+
+</beans>
