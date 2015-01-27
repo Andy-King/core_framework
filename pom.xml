@@ -57,6 +57,7 @@
         
         <!-- Framework dependency versions -->
         <spring.version>3.2.13.RELEASE</spring.version>
+		<spring-data-jpa.version>${spring.version}</spring-data-jpa.version>
         <springmodules.validation.version>0.8</springmodules.validation.version>
 		<aspectj.version>1.7.4</aspectj.version>
 		<cglib-nodep.version>3.1</cglib-nodep.version>
@@ -67,7 +68,6 @@
 		<javassist.version>3.18.1-GA</javassist.version>
 		<ehcache.version>2.6.8</ehcache.version>
 		<asm.version>3.3.1</asm.version>
-
 		<shiro.version>1.2.3</shiro.version>
 		<slf4j.version>1.7.6</slf4j.version>
 		<logback.version>1.1.1</logback.version>
@@ -186,6 +186,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+			
 			<dependency>
 			   <groupId>org.aspectj</groupId>
 			   <artifactId>aspectjrt</artifactId>
@@ -352,16 +353,17 @@
 			</dependency>			
 			<!-- mysql driver -->
 			<dependency>
-			   <groupId>mysql</groupId>
-			   <artifactId>mysql-connector-java</artifactId>
-			   <version>${mysql.connector.version}</version>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.connector.version}</version>
 			</dependency>
 			<!-- oracle driver -->
 			<dependency>
 				<groupId>com.oracle</groupId>
 				<artifactId>ojdbc14</artifactId>
 				<version>${oracle.connector.version}</version>
-			</dependency>			
+			</dependency>
+			
 			<!-- log4jdbc -->
 			<dependency>
 			   <groupId>org.lazyluke</groupId>

@@ -24,10 +24,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang3.StringUtils;
 
-import com.google.common.base.Objects;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.jee.framework.core.utils.ObjectUtils;
 
 
 /**
@@ -38,9 +37,9 @@ import com.google.common.base.Objects;
  * 
  * @see org.apache.commons.collections.CollectionUtils
  * @version collections 3.2.1
- * @author Ak
+ * @author AK
  */
-public abstract class CollectionUtils extends org.apache.commons.collections.CollectionUtils{
+public abstract class CollectionUtils {
 	
 	/**
 	 * 提取集合中的对象的属性(通过Getter函数), 组合成Map.
@@ -504,5 +503,20 @@ public abstract class CollectionUtils extends org.apache.commons.collections.Col
 			throw new UnsupportedOperationException("Not supported");
 		}
 	}
+	
+    /** 
+     * Adds all elements in the array to the given collection.
+     * @param <T>
+     * 
+     * @param collection  the collection to add to, must not be null
+     * @param elements  the array of elements to add, must not be null
+     * @throws NullPointerException if the collection or array is null
+     */
+	@SuppressWarnings("unchecked")
+	public static <T> void addAll(Collection<T> collection, Object[] elements) {
+        for (int i = 0, size = elements.length; i < size; i++) {
+            collection.add((T)elements[i]);
+        }
+    } 
 }
 

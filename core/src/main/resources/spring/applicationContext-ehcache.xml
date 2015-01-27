@@ -3,7 +3,20 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd" default-lazy-init="true">
 
-    <description>Spring ehcache 缓存</description>
+    <description>Spring ehcache 缓存:
+        <![CDATA[
+            <!-- enables scanning for @Cacheable annotation -->
+		    <cache:annotation-driven/>
+		
+		    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		        <property name="cacheManager" ref="ehcache"/>
+		    </bean>
+		
+		    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		        <property name="configLocation" value="classpath:cache/ehcache.xml"/>
+		    </bean>
+        ]]>
+    </description>
     
     <!-- spring对ehcache的缓存工厂支持 -->
     <bean id="ehCacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
