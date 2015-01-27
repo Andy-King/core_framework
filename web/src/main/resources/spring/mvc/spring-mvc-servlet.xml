@@ -80,13 +80,26 @@
 		    </bean>
 		]]>
 	</description>
+	
+    <!-- 自动扫描的包名 -->  
+    <!-- 注意事项请参考：http://jinnianshilongnian.iteye.com/blog/1762632 -->
+    <context:component-scan base-package="com.msds.**.*.controller" use-default-filters="false">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
     
-	<!--  
-    <mvc:view-controller path="/" view-name="redirect:/admin/index"/>
-    -->
-    <!-- 当在web.xml 中   DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
-    <mvc:default-servlet-handler/>
-
+    <!-- 默认的注解映射的支持 -->  
+    <mvc:annotation-driven />  
+      
+    <!-- 视图解释类 -->  
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix" value="/WEB-INF/views/jsp/"/>  
+        <property name="suffix" value=".jsp"/><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->  
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />  
+    </bean>  
+      
     <!-- 静态资源映射 -->
     <mvc:resources mapping="/static/**" location="/static/"/>
 
@@ -111,54 +124,5 @@
         <!-- 默认的content type -->
         <property name="defaultContentType" value="text/html"/>
     </bean>
-
-
-    <!-- ========================= VIEW定义 ========================= -->
-    <!-- 内容协商视图解析器；根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->
-    <!-- 会自动根据解析的contentType来决定使用哪个视图解析器（默认使用整个web应用中的viewResolver） -->
-    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="0">
-        <!-- 内容协商管理器 用于决定media type -->
-        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
-        <!-- 默认视图 放在解析链最后 -->
-        <property name="defaultViews">
-            <list>
-                <!--<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>-->
-                <bean class="com.alibaba.fastjson.support.spring.FastJsonJsonView" />
-                <!--<bean class="org.springframework.web.servlet.view.xml.MarshallingView"/>-->
-            </list>
-        </property>
-    </bean>
-
-    <!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
-    <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:order="1">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="contentType" value="text/html"/>
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
-
-    <!-- 控制器异常处理 -->
-    <bean id="exceptionHandlerExceptionResolver" class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
-        <property name="contentNegotiationManager" ref="contentNegotiationManager"/>
-    </bean>
-
-    <!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames">
-            <list>
-                <!-- 在web环境中一定要定位到classpath 否则默认到当前web应用下找  -->
-                <value>classpath:messages</value>
-                <value>classpath:ValidationMessages</value>
-            </list>
-        </property>
-        <property name="useCodeAsDefaultMessage" value="false"/>
-        <property name="defaultEncoding" value="UTF-8"/>
-        <property name="cacheSeconds" value="60"/>
-    </bean>
-
-    <!--  
-    <import resource="spring-mvc-shiro.xml"/>
-    -->
 
 </beans>
