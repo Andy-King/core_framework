@@ -66,7 +66,7 @@
 
     <!-- Hessian配置 -->
     <servlet>
-        <servlet-name>hessian</servlet-name>
+        <servlet-name>hessianRmi</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>namespace</param-name>
@@ -75,7 +75,7 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>hessian</servlet-name>
+        <servlet-name>hessianRmi</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>    
     <!-- Hessian end-->
@@ -100,7 +100,7 @@
 	</session-config>
 
 	<servlet>
-		<servlet-name>spring3</servlet-name>
+		<servlet-name>spring3MvcDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
             <param-name>contextConfigLocation</param-name>
@@ -109,7 +109,7 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>spring3</servlet-name>
+		<servlet-name>spring3MvcDispatcher</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
 
