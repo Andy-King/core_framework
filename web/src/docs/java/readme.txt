@@ -1,8 +1,11 @@
 -- maven repository
 http://search.maven.org/
 
--- maven create project
-mvn archetype:generate -B -DarchetypeGroupId=org.appfuse.archetypes -DarchetypeArtifactId=appfuse-modular-spring-archetype -DarchetypeVersion=3.0.0 -DgroupId=com.lefeng.core.framework -DartifactId=core-framework -DarchetypeRepository=https://oss.sonatype.org/content/repositories/appfuse
+-- maven command line
+mvn install
+mvn eclipse:clean
+mvn eclipse:eclipse
+mvn jetty:run
 
 -- 项目格式
 core-service
