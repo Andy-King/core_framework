@@ -70,6 +70,7 @@
 	
     <!-- 
     /spring/applicationContext-common.xml
+    /spring/applicationContext-jmx.xml
 	/spring/applicationContext-orm.xml
 	/spring/applicationContext-dataSource.xml
     /spring/applicationContext-dubbo.xml
@@ -83,6 +84,7 @@
 	/spring/applicationContext-zookeeper.xml
      -->
     <import resource="applicationContext-common.xml"/>
+    <import resource="applicationContext-jmx.xml"/>
     <import resource="applicationContext-dataSource.xml"/>
     <import resource="applicationContext-orm.xml"/>
     <import resource="applicationContext-dubbo.xml"/>

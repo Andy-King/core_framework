@@ -16,9 +16,11 @@
 	<jmxConfigurator /> 
 	 
 	<appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- 
 		<cyclicBufferTracker class="ch.qos.logback.core.spi.CyclicBufferTrackerImpl">
 	      <maxNumberOfBuffers>4096</maxNumberOfBuffers>
 	    </cyclicBufferTracker>
+		 -->
 		
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
@@ -35,10 +37,6 @@
 	<appender name="LogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<Encoding>UTF-8</Encoding>
 		
-		<cyclicBufferTracker class="ch.qos.logback.core.spi.CyclicBufferTrackerImpl">
-	      <maxNumberOfBuffers>8092</maxNumberOfBuffers>
-	    </cyclicBufferTracker>
-	    
 		<!-- 每天生成一个日志文件，保存31天的日志文件。 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 		    <!-- log.dir 在maven profile里配置 @see https://github.com/zhangkaitao/es/blob/master/web/src/main/resources/logback.xml-->
@@ -69,7 +67,7 @@
 	<!-- 错误记录 -->
 	<appender name="LogErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 	      <filter class="ch.qos.logback.classic.filter.LevelFilter">
-	         <level>ERROR</level>
+	         <level>DEBUG</level>
 	         <OnMismatch>DENY</OnMismatch>
 	         <OnMatch>ACCEPT</OnMatch>
 	     </filter>
@@ -107,10 +105,6 @@
 	 
 		<asynchronousSending>true</asynchronousSending>
 		
-		<cyclicBufferTracker class="ch.qos.logback.core.spi.CyclicBufferTrackerImpl">
-	      <maxNumberOfBuffers>512</maxNumberOfBuffers>
-	    </cyclicBufferTracker>
-	    
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>
 		</layout>
@@ -161,13 +155,13 @@
 	 通过设置additivity="false"可以让日志不向上一级别的logger输出！
 	 -->
 	<root>
-		<level value="DEBUG" /> 
+		<level value="INFO" /> 
 		<appender-ref ref="Console" />
 		<!-- 
 		<appender-ref ref="LogFile" />
 		<appender-ref ref="Email" />
-		 -->
 		<appender-ref ref="LogErrorFile" />
+		 -->
 		
 	</root>
 </configuration>

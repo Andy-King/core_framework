@@ -322,8 +322,34 @@
 			   <artifactId>logback-classic</artifactId>
 			   <version>${logback.version}</version>
 			   <scope>runtime</scope>
+			   <exclusions>
+					<exclusion>
+						<artifactId>h2</artifactId>
+						<groupId>com.h2database</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>dom4j</artifactId>
+						<groupId>dom4j</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>hsqldb</artifactId>
+						<groupId>hsqldb</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>servlet-api</artifactId>
+						<groupId>javax.servlet</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>mysql-connector-java</artifactId>
+						<groupId>mysql</groupId>
+					</exclusion>
+				</exclusions>
 			</dependency>
-
+			<dependency>  
+				<groupId>ch.qos.logback</groupId>  
+				<artifactId>logback-core</artifactId>  
+				<version>${logback.version}</version>  
+			</dependency>
 			<!-- common-logging 实际调用slf4j -->
 			<dependency>
 			   <groupId>org.slf4j</groupId>

@@ -70,6 +70,7 @@
                 <prop key="hibernate.batch_size">
                     ${hibernate.batch_size}
                 </prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
             </props>
         </property>
     </bean>

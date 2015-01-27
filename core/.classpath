@@ -12,10 +12,10 @@
   <classpathentry kind="var" path="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar" sourcepath="M2_REPO/javax/servlet/servlet-api/2.5/servlet-api-2.5-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/xml/bind/jaxb-api/2.2.7/jaxb-api-2.2.7.jar" sourcepath="M2_REPO/javax/xml/bind/jaxb-api/2.2.7/jaxb-api-2.2.7-sources.jar">
     <attributes>
-      <attribute value="jar:file:/D:/Java/apache-maven-3.0.4/.m2/repository/javax/xml/bind/jaxb-api/2.2.7/jaxb-api-2.2.7-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/D:/Java/apache-maven-3.1.1/.m2/repository/javax/xml/bind/jaxb-api/2.2.7/jaxb-api-2.2.7-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/3.2.13.RELEASE/spring-core-3.2.13.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-core/3.2.13.RELEASE/spring-core-3.2.13.RELEASE-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.3/commons-logging-1.1.3.jar" sourcepath="M2_REPO/commons-logging/commons-logging/1.1.3/commons-logging-1.1.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/3.2.13.RELEASE/spring-orm-3.2.13.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-orm/3.2.13.RELEASE/spring-orm-3.2.13.RELEASE-sources.jar"/>
@@ -52,8 +52,8 @@
   <classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-classic/1.1.1/logback-classic-1.1.1.jar" sourcepath="M2_REPO/ch/qos/logback/logback-classic/1.1.1/logback-classic-1.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-core/1.1.1/logback-core-1.1.1.jar" sourcepath="M2_REPO/ch/qos/logback/logback-core/1.1.1/logback-core-1.1.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/alibaba/druid/1.0.12/druid-1.0.12.jar" sourcepath="M2_REPO/com/alibaba/druid/1.0.12/druid-1.0.12-sources.jar"/>
-  <classpathentry kind="lib" path="D:/Java/jdk1.7.0_07/lib/jconsole.jar"/>
-  <classpathentry kind="lib" path="D:/Java/jdk1.7.0_07/lib/tools.jar"/>
+  <classpathentry kind="lib" path="D:/Java/jdk1.7.0_45/lib/jconsole.jar"/>
+  <classpathentry kind="lib" path="D:/Java/jdk1.7.0_45/lib/tools.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/oracle/ojdbc14/10.2.0.4.0/ojdbc14-10.2.0.4.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/mysql/mysql-connector-java/5.1.27/mysql-connector-java-5.1.27.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5.jar" sourcepath="M2_REPO/org/apache/zookeeper/zookeeper/3.4.5/zookeeper-3.4.5-sources.jar"/>
@@ -64,7 +64,7 @@
   <classpathentry kind="var" path="M2_REPO/jline/jline/0.9.94/jline-0.9.94.jar" sourcepath="M2_REPO/jline/jline/0.9.94/jline-0.9.94-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.11/junit-4.11.jar" sourcepath="M2_REPO/junit/junit/4.11/junit-4.11-sources.jar">
     <attributes>
-      <attribute value="jar:file:/D:/Java/apache-maven-3.0.4/.m2/repository/junit/junit/4.11/junit-4.11-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/D:/Java/apache-maven-3.1.1/.m2/repository/junit/junit/4.11/junit-4.11-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1.jar" sourcepath="M2_REPO/org/hamcrest/hamcrest-core/1.1/hamcrest-core-1.1-sources.jar"/>
@@ -94,12 +94,12 @@
   <classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-xjc/2.2.7/jaxb-xjc-2.2.7.jar" sourcepath="M2_REPO/com/sun/xml/bind/jaxb-xjc/2.2.7/jaxb-xjc-2.2.7-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/sun/xml/bind/jaxb-core/2.2.7/jaxb-core-2.2.7.jar" sourcepath="M2_REPO/com/sun/xml/bind/jaxb-core/2.2.7/jaxb-core-2.2.7-sources.jar">
     <attributes>
-      <attribute value="jar:file:/D:/Java/apache-maven-3.0.4/.m2/repository/com/sun/xml/bind/jaxb-core/2.2.7/jaxb-core-2.2.7-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/D:/Java/apache-maven-3.1.1/.m2/repository/com/sun/xml/bind/jaxb-core/2.2.7/jaxb-core-2.2.7-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/com/sun/istack/istack-commons-runtime/2.16/istack-commons-runtime-2.16.jar" sourcepath="M2_REPO/com/sun/istack/istack-commons-runtime/2.16/istack-commons-runtime-2.16-sources.jar">
     <attributes>
-      <attribute value="jar:file:/D:/Java/apache-maven-3.0.4/.m2/repository/com/sun/istack/istack-commons-runtime/2.16/istack-commons-runtime-2.16-javadoc.jar!/" name="javadoc_location"/>
+      <attribute value="jar:file:/D:/Java/apache-maven-3.1.1/.m2/repository/com/sun/istack/istack-commons-runtime/2.16/istack-commons-runtime-2.16-javadoc.jar!/" name="javadoc_location"/>
     </attributes>
   </classpathentry>
   <classpathentry kind="var" path="M2_REPO/org/freemarker/freemarker/2.3.20/freemarker-2.3.20.jar" sourcepath="M2_REPO/org/freemarker/freemarker/2.3.20/freemarker-2.3.20-sources.jar"/>
