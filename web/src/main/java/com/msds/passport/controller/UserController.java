@@ -12,7 +12,7 @@ import com.msds.passport.service.UserService;
 
 /**
  * http://127.0.0.1:8080/user/list.htm
- * @author lenovo
+ * @author AK
  *
  */
 @Controller

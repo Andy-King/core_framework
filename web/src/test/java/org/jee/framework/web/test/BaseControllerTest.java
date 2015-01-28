@@ -1,7 +1,10 @@
-package org.jee.test;
+package org.jee.framework.web.test;
 
-import org.junit.Test;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
@@ -39,12 +42,27 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 //@ActiveProfiles("development")
 //@see /framework-core/src/main/resources/spring/applicationContext.xml
-public class AbstractTest{
+public class BaseControllerTest {
 
-	@Test
-	public void test(){
-		System.out.println("------");
+	@Before
+	public void setUp() throws Exception {
 	}
-	
-}
 
+	@After
+	public void tearDown() throws Exception {
+	}
+
+    /**
+     * Convenience methods to make tests simpler
+     *
+     * @param url the URL to post to
+     * @return a MockHttpServletRequest with a POST to the specified URL
+     */
+    public MockHttpServletRequest newPost(String url) {
+        return new MockHttpServletRequest("POST", url);
+    }
+
+    public MockHttpServletRequest newGet(String url) {
+        return new MockHttpServletRequest("GET", url);
+    }
+}
