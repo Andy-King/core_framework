@@ -945,7 +945,9 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.database.version}</version>
+			<!--
             <scope>test</scope>
+			-->
         </dependency>		
 		<dependency>
 			<groupId>org.subethamail</groupId>
@@ -1059,6 +1061,7 @@
                         <source>${build.version}</source>
                         <target>${build.version}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
+						<optimize>true</optimize>
                     </configuration>
                 </plugin>
 
