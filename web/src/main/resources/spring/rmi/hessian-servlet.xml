@@ -20,24 +20,24 @@
 				<!-- 需要导出的目标bean-->
 				<property name="service" ref="cardErpService"/>
 				<!-- Hessian服务的接口-->
-				<property name="serviceInterface" value="com.lafaso.service.CardErpService"/>
+				<property name="serviceInterface" value="com.xx.service.CardErpService"/>
 			</bean>  
 			<bean name="/HessianRemotingWeb" class="org.springframework.remoting.caucho.HessianServiceExporter">
 				<!-- 需要导出的目标bean-->
 				<property name="service" ref="cardWebService"/>
 				<!-- Hessian服务的接口-->
-				<property name="serviceInterface" value="com.lafaso.service.CardWebService"/>
+				<property name="serviceInterface" value="com.xx.service.CardWebService"/>
 			</bean>
 			<bean name="/HessianRemotingPay" class="org.springframework.remoting.caucho.HessianServiceExporter">
 				<!-- 需要导出的目标bean-->
 				<property name="service" ref="cardPaymentService"/>
 				<!-- Hessian服务的接口-->
-				<property name="serviceInterface" value="com.lafaso.service.CardPaymentService"/>
+				<property name="serviceInterface" value="com.xx.service.CardPaymentService"/>
 			</bean>
 			    <!-- passport-hessian 用户服务 start -->
 		    <bean name="webdbService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		        <property name="overloadEnabled" value="true"/>
-		        <property name="serviceInterface" value="com.tvj.portal.Interface.hessianproxy.WebdbService"/>
+		        <property name="serviceInterface" value="com.xx.portal.Interface.hessianproxy.WebdbService"/>
 		        <!-- online 
 		        <property name="serviceUrl" value="http://192.168.50.69/remoting/HessianRemoting"/>
 		        -->
@@ -47,7 +47,7 @@
 		   
 		    <bean name="webdbCardService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		        <property name="overloadEnabled" value="true" />
-		        <property name="serviceInterface" value="com.tvj.portal.Interface.hessianproxy.CardService"/>
+		        <property name="serviceInterface" value="com.xx.portal.Interface.hessianproxy.CardService"/>
 		        <!-- online 
 		        <property name="serviceUrl" value="http://192.168.50.69:8080/remoting/CardRemoting"/>
 		        -->
@@ -58,7 +58,7 @@
 		    
 		    <bean name="hessianRemotingWeb" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
 		        <property name="overloadEnabled" value="true" />
-		        <property name="serviceInterface" value="com.lafaso.service.CardWebService"/>
+		        <property name="serviceInterface" value="com.xx.service.CardWebService"/>
 		        <!-- online 
 		        <property name="serviceUrl" value="http://192.168.50.11/remoting/HessianRemoting"/>
 		         -->
@@ -73,7 +73,7 @@
 				  -->
 				</property> 
 				<property name="serviceInterface">
-				<value>com.lafaso.service.CardWebService</value> 
+				<value>com.xx.service.CardWebService</value> 
 				</property>
 			</bean>
 		
