@@ -91,14 +91,9 @@
     </filter>
     <filter-mapping>
         <filter-name>openSessionInView</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>*.htm</url-pattern>
     </filter-mapping>
     
-	<!-- Session超时定义,单位为分钟 -->
-	<session-config>
-		<session-timeout>10</session-timeout>
-	</session-config>
-
 	<servlet>
 		<servlet-name>spring3MvcDispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -112,10 +107,7 @@
 		<servlet-name>spring3MvcDispatcher</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
-
+	
     <error-page>
         <error-code>500</error-code>
         <location>/commons/error.jsp</location>
@@ -139,7 +131,8 @@
             <trim-directive-whitespaces>true</trim-directive-whitespaces>
         </jsp-property-group>
     </jsp-config>
-
+    
+    <!-- Session超时定义,单位为分钟 -->
     <session-config>
         <session-timeout>15</session-timeout>
         <cookie-config>
@@ -148,5 +141,8 @@
         </cookie-config>
         <tracking-mode>COOKIE</tracking-mode>
     </session-config>
-
+    
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

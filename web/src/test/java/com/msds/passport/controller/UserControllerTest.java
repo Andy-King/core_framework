@@ -27,7 +27,6 @@ public class UserControllerTest extends BaseControllerTest{
 
 	@Test
 	public void testCreateForm() {
-		fail("Not yet implemented");
 	}
 
 

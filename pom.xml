@@ -93,7 +93,8 @@
 		<selenium.version>2.38.0</selenium.version>       
         <bootstrap.version>3.0.2</bootstrap.version>
 		<tomcat.jdbc.version>8.0.3</tomcat.jdbc.version>
-		<jetty.version>8.1.15.v20140411</jetty.version>
+		<!--8.1.15.v20140411-->
+		<jetty.version>8.1.8.v20121106</jetty.version>
 		
         <!-- Testing dependency versions -->
         <cargo.version>1.4.4</cargo.version>

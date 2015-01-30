@@ -325,6 +325,7 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
+		
 		<!-- json -->		
 		<!-- xml start -->
 		<dependency>
