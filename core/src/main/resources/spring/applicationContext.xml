@@ -82,7 +82,7 @@
 	/spring/applicationContext-tasks.xml
 	/spring/applicationContext-quartz.xml
 	/spring/applicationContext-zookeeper.xml
-     -->
+     
     <import resource="applicationContext-common.xml"/>
     <import resource="applicationContext-jmx.xml"/>
     <import resource="applicationContext-dataSource.xml"/>
@@ -96,4 +96,6 @@
     <import resource="applicationContext-tasks.xml"/>
     <import resource="applicationContext-quartz.xml"/>
     <import resource="applicationContext-zookeeper.xml"/>
+    -->
+    <import resource="applicationContext-*.xml" />
 </beans>

@@ -65,8 +65,9 @@
      -->
 
     <!-- Hessian配置 -->
+    <!-- 
     <servlet>
-        <servlet-name>hessianRmi</servlet-name>
+        <servlet-name>hessian</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>namespace</param-name>
@@ -75,9 +76,10 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>hessianRmi</servlet-name>
+        <servlet-name>hessian</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>    
+     -->
     <!-- Hessian end-->
     
     <!-- 配置OpenSessionInView过滤器 -->
