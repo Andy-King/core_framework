@@ -61,6 +61,11 @@ public class UserController {
     	return "user/list";
     }
     
+    /**
+     * http://127.0.0.1/user/test0.htm
+     * @param m
+     * @return
+     */
     @RequestMapping(value="test0.htm",method =RequestMethod.GET)
     public @ResponseBody User test0(Model m){
     	User user = new User();
@@ -71,6 +76,12 @@ public class UserController {
     	return user;
     }
     
+    /**
+     * http://127.0.0.1/user/test1.htm?callback=test
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value="test1.htm",method =RequestMethod.GET)
     public ResponseEntity<String> test1(HttpServletRequest request) throws IOException{
     	User user = new User();
