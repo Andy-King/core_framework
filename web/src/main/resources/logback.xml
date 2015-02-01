@@ -10,7 +10,7 @@
      -->
     
 	<!-- 日志保存路径为tomcat下面的logs下面的DataServiceLogs文件夹，logback会自动创建文件夹，这样设置了就可以输出日志文件了 -->
-	<substitutionProperty name="logbase" value="../logs/interface-service-logs/interface_service" />
+	<substitutionProperty name="logbase" value="../logs/webapp_logs/webapp_log" />
 	
 	<!-- 这个是要配置输出文件的-->
 	<jmxConfigurator /> 
@@ -153,7 +153,7 @@
 	 通过设置additivity="false"可以让日志不向上一级别的logger输出！
 	 -->
 	<root>
-		<level value="DEBUG" /> 
+		<level value="INFO" /> 
 		<appender-ref ref="Console" />
 		<!-- 
 		<appender-ref ref="LogFile" />

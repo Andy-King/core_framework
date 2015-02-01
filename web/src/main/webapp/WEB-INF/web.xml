@@ -126,22 +126,25 @@
         <error-code>404</error-code>
         <location>/commons/404.jsp</location>
     </error-page>
-
+	<!-- 
     <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
             <trim-directive-whitespaces>true</trim-directive-whitespaces>
         </jsp-property-group>
     </jsp-config>
+	 -->
     
     <!-- Session超时定义,单位为分钟 -->
     <session-config>
-        <session-timeout>15</session-timeout>
+        <session-timeout>10</session-timeout>
+        <!-- 
         <cookie-config>
             <http-only>true</http-only>
-            <!--<secure>true</secure>-->
+            <secure>true</secure>
         </cookie-config>
         <tracking-mode>COOKIE</tracking-mode>
+         -->
     </session-config>
     
     <welcome-file-list>

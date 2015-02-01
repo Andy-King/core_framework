@@ -20,6 +20,31 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 
+/**
+ * 
+ * Clean deprecated method. as of Spring 3.2.7, in favor of using a regular execute call with a generic List type declared
+ * 
+ * <pre>
+ * public <T> T execute(HibernateCallback<T> action) throws DataAccessException {
+ *     return doExecute(action, false, false);
+ * }
+ * 
+ * @Deprecated
+ * public List executeFind(HibernateCallback<?> action) throws DataAccessException {
+ *     Object result = doExecute(action, false, false);
+ *     if (result != null && !(result instanceof List)) {
+ * 	         throw new InvalidDataAccessApiUsageException(
+ *                  "Result object returned from HibernateCallback isn't a List: [" + result + "]");
+ *     }
+ *     return (List) result;
+ * }
+ * </pre>
+ * 
+ * @author AK
+ * @date Date : 2015-02-01
+ * @param <T>
+ * @param <PK>
+ */
 @Repository("baseDao")
 public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	
@@ -35,13 +60,11 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	
 	/**
 	 * 通过构造函数获取泛型中的实体类型.
-	 * 
-	 * 
 	 */
 	@SuppressWarnings({ "unchecked"})
 	public BaseDaoImpl() {
 		this.entityClass = null;
-		Class objClass = getClass();
+		Class<?> objClass = getClass();
 		Type objType = objClass.getGenericSuperclass();
 		if (objType instanceof ParameterizedType) {
 			Type[] parameterizedType = ((ParameterizedType) objType).getActualTypeArguments();
@@ -159,7 +182,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	public List<T> getEntities(final int page, final int recordes) {
 		final StringBuilder objHqlBuffer = new StringBuilder();
 		objHqlBuffer.append("from ").append(entityClass.getName()).append(" as model ");
-		List<T> list = hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {
+		List<T> list = hibernateTemplate.execute(new HibernateCallback<List<T>>() {
 			
 			@Override
 			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
@@ -455,7 +478,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findByCause(final int page, final int recordes, final String hql) {
-		List<T> list = hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {
+		List<T> list = hibernateTemplate.execute(new HibernateCallback<List<T>>() {
 			
 			@Override
 			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
@@ -484,7 +507,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> find(final int page, final int recordes, final String queryString, final Object... value) {
-		List<T> list = hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {
+		List<T> list = hibernateTemplate.execute(new HibernateCallback<List<T>>() {
 			
 			@Override
 			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
@@ -548,7 +571,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public List<T> find(final String queryString, final String[] names, final Object[] values) {
-		return hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {			
+		return hibernateTemplate.execute(new HibernateCallback<List<T>>() {			
 			@Override
 			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
 				Query query = session.createQuery(queryString);
@@ -692,10 +715,10 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object> findBySql(final String sql) {
-		return hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {
+		return hibernateTemplate.execute(new HibernateCallback<List<Object>>() {
 			
 			@Override
-			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
+			public List<Object> doInHibernate(Session session) throws HibernateException, SQLException {
 				SQLQuery query = session.createSQLQuery(sql);
 				query.setMaxResults(-1);
 				return query.list();
@@ -719,10 +742,10 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object> findBySql(final String sql, final Object[] objects, final org.hibernate.type.Type[] types) {
-		return hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {
+		return hibernateTemplate.execute(new HibernateCallback<List<Object>>() {
 			
 			@Override
-			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
+			public List<Object> doInHibernate(Session session) throws HibernateException, SQLException {
 				SQLQuery query = session.createSQLQuery(sql);
 				query.setMaxResults(-1);
 				query.setParameters(objects, types);
@@ -736,7 +759,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@Override
 	public List<T> findBySql(final String sql, final Object[] objects, final org.hibernate.type.Type[] types,
 			final Class<T> cls) {
-		return hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {
+		return hibernateTemplate.execute(new HibernateCallback<List<T>>() {
 			
 			@Override
 			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
@@ -838,7 +861,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@Override
 	public List<Object> findBySql(final int page, final int recordes, final String sql, final Object[] objects,
 			final org.hibernate.type.Type[] types) {
-		return hibernateTemplate.executeFind(new HibernateCallback<List<Object>>() {
+		return hibernateTemplate.execute(new HibernateCallback<List<Object>>() {
 			
 			@Override
 			public List<Object> doInHibernate(Session session) throws HibernateException, SQLException {
@@ -856,7 +879,7 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@Override
 	public List<T> findBySql(final int page, final int recordes, final String sql, final Object[] objects,
 			final org.hibernate.type.Type[] types, final Class<T> cls) {
-		return hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {
+		return hibernateTemplate.execute(new HibernateCallback<List<T>>() {
 			
 			@Override
 			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
@@ -874,10 +897,10 @@ public class BaseDaoImpl<T, PK extends Serializable> implements IBaseDao<T, PK>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object> findBySql(final String sql, final String[] names, final Object[] values) {
-		return hibernateTemplate.executeFind(new HibernateCallback<List<T>>() {
+		return hibernateTemplate.execute(new HibernateCallback<List<Object>>() {
 
 			@Override
-			public List<T> doInHibernate(Session session) throws HibernateException, SQLException {
+			public List<Object> doInHibernate(Session session) throws HibernateException, SQLException {
 				SQLQuery query = session.createSQLQuery(sql);
 				query.setMaxResults(-1);
 				if (names != null && values != null && names.length == values.length) {

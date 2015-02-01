@@ -29,11 +29,31 @@ import org.springframework.stereotype.Service;
 public abstract class BaseServiceImpl<T, PK extends Serializable> implements IBaseService<T, PK> {
 	
 	/**
+	 * 获取实际操作的DAO实现类.<br/>
+	 * 
 	 * <pre>
-	 * 获取实际操作的DAO实现类.
+	 * {@code
+	 * Examples:
+	 * @Service(value="userService")
+	 * public class UserServiceImpl extends BaseServiceImpl<User, Long> implements UserService {
+	 *
+	 *     @Resource(name="userDao")
+	 *     private UserDao userDao;
+	 *
+	 *     @Override
+	 *     public IBaseDao<User, Long> getBaseDao() {
+	 *         return userDao;
+	 *     }
+	 *
+	 *     public void setUserDao(UserDao userDao) {
+	 *         this.userDao = userDao;
+	 *     }
+	 *
+	 * }
+	 * }
 	 * </pre>
 	 * 
-	 * @return the base dao
+	 * @return the dao
 	 * 
 	 */
 	public abstract IBaseDao<T, PK> getBaseDao();

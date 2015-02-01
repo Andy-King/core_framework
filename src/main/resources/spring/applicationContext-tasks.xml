@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="
+          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+          http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"  default-lazy-init="true">
+          
+    <description>ThreadPool 配置如下:
+    <![CDATA[
+       private static ThreadPoolExecutor executor = new ThreadPoolExecutor( 20,              //corePoolSize
+                                                                            30,              //maximumPoolSize
+                                                                            10,              //keepAliveTime
+                                                                            TimeUnit.MINUTES,//TimeUnit
+                                                                            new ArrayBlockingQueue<Runnable>(40),
+                                                                            new ThreadPoolExecutor.CallerRunsPolicy());//queue
+                                                                            
+                                                                            
+    <!-- 
+    <task:scheduled-tasks scheduler="scheduler">
+        &lt;!--自动清理删除的关系 每天2点执行执行 --&gt
+        &lt;task:scheduled ref="relationClearTask" method="autoClearRelation" cron="0 0 2 * * ?"/>
+        &lt;!--自动清理删除的关系 每天2点30执行--&gt
+        <task:scheduled ref="messageClearTask" method="autoClearExpiredOrDeletedmMessage" cron="0 30 2 * * ?"/>
+    </task:scheduled-tasks>
+     -->
+
+
+    <!--&lt;!&ndash; 使用quartz执行任务调度 shiro也是使用它   &ndash;&gt;-->
+    <!--<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" destroy-method='destroy'>-->
+        <!--<property name="triggers">-->
+            <!--<list>-->
+                <!--<ref bean="autoClearDeletedRelationTrigger"/>-->
+                <!--<ref bean="autoClearExpiredOrDeletedmMessageTrigger"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 清理对象关系的定时任务 &ndash;&gt;-->
+
+    <!--&lt;!&ndash;自动清理删除的关系&ndash;&gt;-->
+    <!--<bean id="autoClearDeletedRelationJob"-->
+          <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject" ref="relationClearTask"/>-->
+        <!--<property name="targetMethod" value="autoClearRelation"/>-->
+        <!--<property name="concurrent" value="false"/>-->
+    <!--</bean>-->
+    <!--<bean id="autoClearDeletedRelationTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="autoClearDeletedRelationJob"/>-->
+        <!--&lt;!&ndash; 每天2点执行 &ndash;&gt;-->
+        <!--<property name="cronExpression" value="0 0 2 * * ?"/>-->
+    <!--</bean>-->
+
+
+    <!--&lt;!&ndash;自动清理过期的消息&ndash;&gt;-->
+    <!--<bean id="autoClearExpiredOrDeletedmMessageJob"-->
+          <!--class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject" ref="messageClearTask"/>-->
+        <!--<property name="targetMethod" value="autoClearExpiredOrDeletedmMessage"/>-->
+        <!--<property name="concurrent" value="false"/>-->
+    <!--</bean>-->
+    <!--<bean id="autoClearExpiredOrDeletedmMessageTrigger"-->
+          <!--class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="autoClearExpiredOrDeletedmMessageJob"/>-->
+        <!--&lt;!&ndash; 每天2点30执行 &ndash;&gt;-->
+        <!--<property name="cronExpression" value="0 30 2 * * ?"/>-->
+    <!--</bean>-->                                                                            
+    ]]>
+    
+
+    </description>
+
+    
+    <!-- 公用线程池配置, e.g: ExecutorService executorService -->
+    <bean id="executorService" class="org.springframework.scheduling.concurrent.ThreadPoolExecutorFactoryBean" lazy-init="false" destroy-method="destroy">
+        <!-- 核心线程数，默认为1 -->
+        <property name="corePoolSize" value="10" />
+        <!-- 最大线程数，默认为Integer.MAX_VALUE -->
+        <property name="maxPoolSize" value="50" />
+        <!-- 队列最大长度，默认为Integer.MAX_VALUE -->
+        <property name="queueCapacity" value="3000" />
+        <!-- 线程池维护线程所允许的空闲时间，默认为60s -->
+        <property name="keepAliveSeconds" value="300" />
+        <!--
+                     线程池对拒绝任务（超过待处理队列长度）的处理策略，目前只支持AbortPolicy、CallerRunsPolicy；默认为后者
+        -->
+        <property name="rejectedExecutionHandler">
+        <!--
+        AbortPolicy:直接抛出java.util.concurrent.RejectedExecutionException异常
+        -->
+        <!-- CallerRunsPolicy:若已达到待处理队列长度，将由主线程直接处理请求 -->
+        <!-- DiscardOldestPolicy:抛弃旧的任务；会导致被丢弃的任务无法再次被执行 -->
+        <!-- DiscardPolicy:抛弃当前任务；会导致被丢弃的任务无法再次被执行 -->
+              <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy" />
+        </property>
+        <property name="waitForTasksToCompleteOnShutdown" value="true" />
+    </bean>
+
+
+
+
+</beans>

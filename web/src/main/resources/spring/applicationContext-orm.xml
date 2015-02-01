@@ -69,14 +69,16 @@
                 <prop key="hibernate.cache.use_query_cache">
                     ${hibernate.cache.use_query_cache}
                 </prop>
+                <!-- Memcached second level cache
                 <prop key="hibernate.memcached.servers"> 
                     ${hibernate.memcached.servers} 
                 </prop>
+                 -->
                 <!-- 设置容器启动对数据库是刷新还是检查变更，正是上线需要注释 
-                -->
                 <prop key="hibernate.hbm2ddl.auto"> 
                     ${hibernate.hbm2ddl.auto} 
                 </prop> 
+                -->
             </props>
         </property>
     </bean>
