@@ -121,6 +121,7 @@
     </mvc:annotation-driven>
     
     <!-- 视图解释类 -->
+    <!-- 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="mediaTypes">
             <map>
@@ -133,6 +134,7 @@
             </list>
         </property>
     </bean> 
+     -->
     
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="1">
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />  

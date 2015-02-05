@@ -153,7 +153,7 @@
 	 通过设置additivity="false"可以让日志不向上一级别的logger输出！
 	 -->
 	<root>
-		<level value="INFO" /> 
+		<level value="DEBUG" /> 
 		<appender-ref ref="Console" />
 		<!-- 
 		<appender-ref ref="LogFile" />
